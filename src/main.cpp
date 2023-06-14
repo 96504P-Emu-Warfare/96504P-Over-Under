@@ -247,6 +247,7 @@ void opcontrol() {
 		{
 		}
 
+		//Simple linear drive controls
 		double Drive = Controller1.get_analog(ANALOG_LEFT_Y);
 
 		double Turn = Controller1.get_analog(ANALOG_RIGHT_X);
@@ -262,6 +263,7 @@ void opcontrol() {
 		MR.move_velocity(right);
 		BR.move_velocity(right);
 
+		//Speed boost
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
 			drive_speed = 0.9;

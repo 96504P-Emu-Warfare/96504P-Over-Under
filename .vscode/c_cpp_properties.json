@@ -5,7 +5,8 @@
       "includePath": [
         "${workspaceFolder}/**",
         "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\Robot 1\\Data",
-        "c:\\Users\\theco\\96504P-Over-Under\\Robot 1\\Data"
+        "c:\\Users\\theco\\96504P-Over-Under\\Robot 1\\Data",
+        "c:\\Users\\theco\\96504P-Over-Under\\include"
       ],
       "defines": [
         "_DEBUG",

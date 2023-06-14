@@ -4,6 +4,7 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
+        "d:\\Downloads\\Example-Project (1)\\include",
         "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\include"
       ],
       "defines": [
@@ -22,7 +23,8 @@
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
-      }
+      },
+      "configurationProvider": "ms-vscode.makefile-tools"
     }
   ],
   "version": 4

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "paired AUTON document"
-
+#include "IncludeDocument.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -10,40 +10,40 @@
  */
 using namespace pros;
 
-	Controller Controller1(E_CONTROLLER_MASTER);
-	Controller Controller2(E_CONTROLLER_PARTNER);
-	Motor frontLeft(11, E_MOTOR_GEARSET_06, 1);
-	Motor frontRight(19, E_MOTOR_GEARSET_06, 0);
-	Motor backLeft(12, E_MOTOR_GEARSET_06, 1);
-	Motor backRight(20, E_MOTOR_GEARSET_06, 0);
-	Motor topLeft(1, E_MOTOR_GEARSET_06, 0);
-	Motor topRight(10, E_MOTOR_GEARSET_06, 0);
+Controller Controller1(E_CONTROLLER_MASTER);
+Controller Controller2(E_CONTROLLER_PARTNER);
+Motor frontLeft(11, E_MOTOR_GEARSET_06, 1);
+Motor frontRight(19, E_MOTOR_GEARSET_06, 0);
+Motor backLeft(12, E_MOTOR_GEARSET_06, 1);
+Motor backRight(20, E_MOTOR_GEARSET_06, 0);
+Motor topLeft(1, E_MOTOR_GEARSET_06, 0);
+Motor topRight(10, E_MOTOR_GEARSET_06, 0);
 
-	
-	ADIDigitalOut Indexer('A', LOW);
-	ADIDigitalOut Expansion('B', LOW);
-	ADIDigitalOut Expansion2('C', LOW);
-	Motor FLY(5, E_MOTOR_GEARSET_06, 0);
-	Motor INTR(6, E_MOTOR_GEARSET_06, 1);
+ADIDigitalOut Indexer('A', LOW);
+ADIDigitalOut Expansion('B', LOW);
+ADIDigitalOut Expansion2('C', LOW);
+Motor FLY(5, E_MOTOR_GEARSET_06, 0);
+Motor INTR(6, E_MOTOR_GEARSET_06, 1);
 
-	double drive_speed  = 0.6;
-	double turn_speed = 0.5;
-	double heat_speed =  1;
-	double turbo_speed = 1;
-	double F_speed = 1800;
-	double IN_speed = 500;
-	double R_speed = 60;
-	bool F_toggle = false;
-	bool IN_toggle = false;
+double drive_speed = 0.6;
+double turn_speed = 0.5;
+double heat_speed = 1;
+double turbo_speed = 1;
+double F_speed = 1800;
+double IN_speed = 500;
+double R_speed = 60;
+bool F_toggle = false;
+bool IN_toggle = false;
 
-void on_center_button() {
+void on_center_button()
+{
 	static bool pressed = false;
 	pressed = !pressed;
-	if (pressed) 
+	if (pressed)
 	{
 		pros::lcd::set_text(2, "I was pressed!");
-	} 
-	else 
+	}
+	else
 	{
 		pros::lcd::clear_line(2);
 	}
@@ -55,7 +55,7 @@ void on_center_button() {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() 
+void initialize()
 {
 	pros::lcd::initialize();
 	pros::lcd::register_btn1_cb(on_center_button);
@@ -66,7 +66,7 @@ void initialize()
 	backLeft.move_velocity(400);
 	frontRight.move_velocity(-400);
 	topRight.move_velocity(-400);
-	backRight.move_velocity(-400);  
+	backRight.move_velocity(-400);
 	*/
 }
 
@@ -100,9 +100,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 
-void autonomous() 
+void autonomous()
 {
-	
 }
 
 /**
@@ -118,114 +117,16 @@ void autonomous()
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void increase_F_speed()
-{
-  F_speed += 100;
-  if (F_speed > 3000)
-  {
-    F_speed = 3000;
-  }
-}
 
-void decrease_F_speed()
-{
-  F_speed = F_speed - 100;
-  if (F_speed < 0)
-  {
-    F_speed = 0;
-  }
-}
-
-
-void F_toggleButton()
-{
-  if(F_toggle)
-  {
-	//FLY.set_brake_mode(MOTOR_BRAKE_COAST);
-	FLY.move_velocity(0);
-  }
-  else
-  {
-    F_speed = 1800;
-	FLY.move_velocity(F_speed);
-  }
-    F_toggle = !F_toggle;
-
-}
-
-void IN_toggleButton()
-{
-  if(Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
-  {
-	IN_toggle = !IN_toggle;
-    if(IN_toggle == true)
-    {
-        INTR.move_velocity(IN_speed);
-    }
-    else
-    {
-      INTR.move_velocity(0);
-    }
-
-  }
-  else
-  {
-	IN_toggle = !IN_toggle;
-    if(IN_toggle == true)
-    {
-        INTR.move_velocity(-R_speed*3);
-    }
-    else
-    {
-      INTR.move_velocity(0);
-    }
-  }
-}
-
-
-
-void Indexer_activate()
-{
-  if(Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
-  {
-    Indexer.set_value(HIGH);
-	delay(150);
-    //wait(0.15,seconds);
-    Indexer.set_value(LOW);
-  }
-  else
-  {	
-    for(int i = 0; i < 3; i++)
-    {
-        Indexer.set_value(HIGH);
-        delay(150);
-        Indexer.set_value(LOW);
-        delay(200);
-    }
-  }
-}
-
-void Expand()
-{
-  if(Controller1.get_digital(E_CONTROLLER_DIGITAL_Y) || Controller2.get_digital(E_CONTROLLER_DIGITAL_Y))
-  {
-    Expansion.set_value(HIGH);
-    Expansion2.set_value(HIGH);
-    FLY.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-  }
-}
-
-void opcontrol() 
+void opcontrol()
 {
 	pros::lcd::set_text(1, "zesty");
 
-	//Brain.Timer.clear();
+	// Brain.Timer.clear();
 	frontLeft.move_velocity(0);
 	frontRight.move_velocity(0);
 	backLeft.move_velocity(0);
 	backRight.move_velocity(0);
-	FLY.move_velocity(0);
-	INTR.move_velocity(0);
 
 	frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -252,134 +153,94 @@ void opcontrol()
    Controller2.ButtonX.pressed(Expand);
 	*/
 
+	/**
+	 * BUTTON INPUT SYSTEM HERE
+	 */
 
-	while (true) 
+	while (true)
 	{
-		if(Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
-			//FLY.move_velocity(300);
+			// FLY.move_velocity(300);
 
 			F_toggleButton();
 
-				//F_toggle = true;
-			//pros::lcd::set_text(1, "haha56");
+			// F_toggle = true;
+			// pros::lcd::set_text(1, "haha56");
 		}
 
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
+		{
+		}
 
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
-	{
-		F_toggleButton();
-		screen::print(TEXT_MEDIUM, 3, "DaBaby");
-	}
-	
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
-	{
-		IN_toggleButton();
-	}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
+		{
+		}
 
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_L2))
-	{
-		Indexer_activate();
-	}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2))
+		{
+		}
 
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_UP))
-	{
-		increase_F_speed();
-	}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_UP))
+		{
+		}
 
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_DOWN))
-	{
-		decrease_F_speed();
-	}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_DOWN))
+		{
+		}
 
-	if(Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
-	{
-		Expand();
-	}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
+		{
+		}
 
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_R2))
-	{
-		F_toggleButton();
-	}
-	
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_R1))
-	{
-		IN_toggleButton();
-	}
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R2))
+		{
+		}
 
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_L2))
-	{
-		Indexer_activate();
-	}
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R1))
+		{
+		}
 
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_UP))
-	{
-		increase_F_speed();
-	}
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_L2))
+		{
+		}
 
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_DOWN))
-	{
-		decrease_F_speed();
-	}
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_UP))
+		{
+		}
 
-	if(Controller2.get_digital(E_CONTROLLER_DIGITAL_X))
-	{
-		Expand();
-	}
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_DOWN))
+		{
+		}
 
-		/*
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-		int left = Controller1.get_analog(ANALOG_LEFT_Y);
-		int right = Controller1.get_analog(ANALOG_RIGHT_Y);
-		*/
+		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_X))
+		{
+		}
 
-
-		//left_mtr = left;
-		//right_mtr = right;
-
-		//
-
-		
 		double Drive = Controller1.get_analog(ANALOG_LEFT_Y);
 
 		double Turn = Controller1.get_analog(ANALOG_RIGHT_X);
 
-		double left = (((Drive*drive_speed + Turn*turn_speed))/127 * 600);
+		double left = (((Drive * drive_speed + Turn * turn_speed)) / 127 * 600);
 
+		double right = (((Drive * drive_speed - Turn * turn_speed)) / 127 * 600);
 
+		frontLeft.move_velocity(left);
+		topLeft.move_velocity(left);
+		backLeft.move_velocity(left);
+		frontRight.move_velocity(right);
+		topRight.move_velocity(right);
+		backRight.move_velocity(right);
 
-		double right = (((Drive*drive_speed - Turn*turn_speed))/127 * 600);
-		
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
+		{
+			drive_speed = 1;
+		}
+		else
+		{
+			drive_speed = 0.6;
+		}
 
-		
-	   frontLeft.move_velocity(left);
-       topLeft.move_velocity(left );
-       backLeft.move_velocity(left);
-       frontRight.move_velocity(right);
-       topRight.move_velocity(right);
-       backRight.move_velocity(right);  
-		
-
-	/*
-	   frontLeft.move((left*600)/215);
-       topLeft.move((left*600)/215);
-       backLeft.move((left*600)/215);
-       frontRight.move((right*600)/215);
-       topRight.move((right*600)/215);
-       backRight.move((right*600)/215);  
-*/
-	    if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
-        {
-           drive_speed = 1;		    
-        }	
-       else
-       {
-           drive_speed = 0.6;
-       }
-
-	   pros::delay(20);
+		pros::delay(20);
 	}
 }
-

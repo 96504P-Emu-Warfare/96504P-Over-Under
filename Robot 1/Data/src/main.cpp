@@ -9,17 +9,16 @@ using namespace pros;
 Controller Controller1(E_CONTROLLER_MASTER);
 Controller Controller2(E_CONTROLLER_PARTNER);
 // For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards)
-Motor FL(11, E_MOTOR_GEARSET_06, 1);
-Motor FR(19, E_MOTOR_GEARSET_06, 0);
-Motor BL(12, E_MOTOR_GEARSET_06, 1);
-Motor BR(20, E_MOTOR_GEARSET_06, 0);
-Motor ML(1, E_MOTOR_GEARSET_06, 0);
-Motor MR(10, E_MOTOR_GEARSET_06, 0);
+Motor FL(1, E_MOTOR_GEARSET_06, 0);
+Motor FR(4, E_MOTOR_GEARSET_06, 1);
+Motor BL(2, E_MOTOR_GEARSET_06, 1);
+Motor BR(5, E_MOTOR_GEARSET_06, 0);
+Motor ML(3, E_MOTOR_GEARSET_06, 1);
+Motor MR(6, E_MOTOR_GEARSET_06, 1);
 
 // Add other motors, sensors and pistons here
 
 // Variables
-
 
 // Chassis constructor
 Drive chassis(
@@ -77,9 +76,6 @@ Drive chassis(
  */
 void initialize()
 {
-	// Print our branding over your terminal :D
-	ez::print_ez_template();
-
 	pros::delay(500); // Stop the user from doing anything while legacy ports configure.
 
 	// Configure your chassis controls
@@ -107,6 +103,8 @@ void initialize()
 	// Initialize chassis and auton selector
 	chassis.initialize();
 	ez::as::initialize();
+
+	// Set up controller screens
 }
 
 /**
@@ -169,7 +167,13 @@ void autonomous()
  */
 void opcontrol()
 {
-	pros::lcd::set_text(1, "OpControl is Now Running");
+	pros::lcd::set_text(0, "OpControl is Now Running");
+
+	pros::master.clear();
+	pros::partner.clear();
+
+	pros::master.print(0, 1, "Controller 1 Engaged");
+	pros::partner.print(0, 1, "Controller 2 Engaged");
 
 	// Brain.Timer.clear();
 	FL.move_velocity(0);
@@ -270,3 +274,4 @@ void opcontrol()
 
 		pros::delay(20);
 	}
+}

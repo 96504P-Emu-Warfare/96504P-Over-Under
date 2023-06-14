@@ -44,7 +44,7 @@
 #define PROS_VERSION_PATCH 3
 #define PROS_VERSION_STRING "3.7.3"
 
-#include "pros/adi.h"
+#include "include/pros/adi.h"
 #include "pros/colors.h"
 #include "pros/distance.h"
 #include "pros/error.h"

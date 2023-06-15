@@ -4,7 +4,8 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
-        "d:\\Downloads\\Example-Project (1)\\include"
+        "d:\\Downloads\\Example-Project (1)\\include",
+        "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\include"
       ],
       "defines": [
         "_DEBUG",
@@ -15,10 +16,10 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-arm",
-      "compileCommands": "d:\\Downloads\\Example-Project (1)\\compile_commands.json",
+      "compileCommands": "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\compile_commands.json",
       "browse": {
         "path": [
-          "d:\\Downloads\\Example-Project (1)"
+          "c:\\Users\\theco\\Github Codes\\96504P-Over-Under"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""

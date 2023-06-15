@@ -3,7 +3,6 @@
 
 import os
 import shutil
-import time
 
 auton_to_test = r"C:\Users\theco\Github Codes\96504P-Over-Under\!Robot 1\Alpha and Before\TankAutons.preAlpha.0.0.1.cpp"
 

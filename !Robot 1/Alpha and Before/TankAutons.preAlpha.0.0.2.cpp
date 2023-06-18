@@ -1,10 +1,20 @@
-//THIS IS THE MASTER FILE FOR AUTONS. THIS FILE IS FOR TESTING ONLY. ANY WORK SHOULD BE DONE INSIDE 
-//THE ORIGINAL FILE IN THE !ROBOT 1 LIBRARY
+/**************************************************************
+         AUTONOMOUSES / AUTONOMISES / AUTONOMI
+
+Where all the autonomous code is housed, including 
+Skills
+
+The selection of autons is:
+ - Nothing yet, come back later
+
+Created 6/17/23
+Last update 6/18/23
+
+****************************************************************/
 
 #include "main.h"
 
-using namespace pros;
-
+// Variables
 
 const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
                              // If this is 127 and the robot tries to heading correct, it's only correcting by

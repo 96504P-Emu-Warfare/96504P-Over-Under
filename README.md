@@ -29,6 +29,3 @@ EZ-Template is a simple plug-and-play PROS template that handles drive base func
 ## Additing Autonomous Routines
 [Check out the tutorial on adding new autonomous routines here!](https://ez-robotics.github.io/EZ-Template/docs/Tutorials/autons.html)
 
-## License
-This project is licensed under the Mozilla Public License, version 2.0 - see the [LICENSE](LICENSE)
-file for the full license.

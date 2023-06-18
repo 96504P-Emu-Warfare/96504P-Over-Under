@@ -42,7 +42,14 @@
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 #include "EZ-Template/api.hpp"
-#include "autons.hpp"
+
+
+//All the AdditionalClasses stuff
+#include "src/AdditionalClasses/Autons.cpp"
+#include "src/AdditionalClasses/Constants&ExitConditons.cpp"
+#include "src/AdditionalClasses/ControllerScreen.cpp"
+#include "src/AdditionalClasses/Odometry.cpp"
+#include "src/AdditionalClasses/RobotSetup.cpp"
 
 // More includes here...
 //
@@ -85,3 +92,4 @@ void opcontrol(void);
 #endif
 
 #endif  // _PROS_MAIN_H_
+

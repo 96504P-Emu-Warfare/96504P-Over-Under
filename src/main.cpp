@@ -26,15 +26,18 @@ void initialize()
 	pros::delay(500); // Stop the user from doing anything while legacy ports configure.
 
 	// Configure your chassis controls
-	chassis.set_active_brake(0.1); // Sets the active brake kP
 	default_constants();
 	exit_condition_defaults();
 
+	// Select the autonomous on brain screen
 	autonSelector();
 
 	// Initialize chassis and auton selector
 	chassis.initialize();
 	ez::as::initialize();
+
+	// Create the controller screen tasks
+	Task controllerScreen(controllerSetup);
 }
 
 /**

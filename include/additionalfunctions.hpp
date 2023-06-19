@@ -20,9 +20,13 @@ void exit_condition_defaults();
 void modified_exit_condition();
 
 //ControllerScreen.cpp
+void controllerSetup();
+void overheatWarning();
 
 //DriveControl.cpp
 void driverControl();
+extern double left;
+extern double right;
 
 //Odometry.cpp
 float getEncoderValue();

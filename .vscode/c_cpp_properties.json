@@ -3,9 +3,8 @@
         {
             "name": "PROS Project",
             "includePath": [
-                "${workspaceFolder}/**",
-                "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\include",
-                "c:\\Users\\theco\\Github Codes\\96504P-Over-Under\\src**"
+                "${workspaceFolder}/**"
+                
             ],
             "defines": [
                 "_DEBUG",

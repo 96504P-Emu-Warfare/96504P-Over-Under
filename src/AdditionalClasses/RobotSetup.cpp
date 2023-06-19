@@ -1,4 +1,3 @@
-#include "main.h"
 #include "../include/robotsetup.hpp"
 
 /**************************************************************
@@ -18,10 +17,8 @@ Last update 6/17/23
 
 using namespace pros;
 
-void robotSetup() {
-
 // ------------- ALLIANCE ----------- //
-std::string str("blue"); // Blue by default
+std::string alliance("blue"); // Blue by default
 
 // ------------ CHASSIS -------- //
 Drive chassis(
@@ -81,4 +78,3 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 // ------------- PNEUMATICS ----------- //
 
 // ------------- SENSORS ----------- //
-}

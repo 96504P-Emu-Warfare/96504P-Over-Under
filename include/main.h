@@ -44,18 +44,9 @@
 #include "EZ-Template/api.hpp"
 
 
-//All the AdditionalClasses stuff
-#include "src\AdditionalClasses\Autons.cpp"
-#include "src/AdditionalClasses/Constants&ExitConditons.cpp"
-#include "src/AdditionalClasses/ControllerScreen.cpp"
-#include "src/AdditionalClasses/Odometry.cpp"
-#include "src/AdditionalClasses/RobotSetup.cpp"
-#include "src/AdditionalClasses/DriveControl.cpp"
-#include "src/AdditionalClasses/AutonSelector.cpp"
-
 // More includes here...
-//
-// . . .
+#include "additionalclasses.hpp"
+#include "robotsetup.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do

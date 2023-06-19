@@ -1,4 +1,6 @@
 #include "main.h"
+#include "../include/robotsetup.hpp"
+
 /**************************************************************
 ROBOT SETUP 
 
@@ -16,8 +18,10 @@ Last update 6/17/23
 
 using namespace pros;
 
+void robotSetup() {
+
 // ------------- ALLIANCE ----------- //
-string alliance = {"blue"}; // Blue by default
+std::string str("blue"); // Blue by default
 
 // ------------ CHASSIS -------- //
 Drive chassis(
@@ -69,11 +73,12 @@ Motor BR(5, E_MOTOR_GEARSET_06, 0);
 Motor ML(3, E_MOTOR_GEARSET_06, 1);
 Motor MR(6, E_MOTOR_GEARSET_06, 1);
 
+
 // ------------- CONTROLLERS ----------- //
 Controller Controller1(E_CONTROLLER_MASTER);
 Controller Controller2(E_CONTROLLER_PARTNER);
 
-
 // ------------- PNEUMATICS ----------- //
 
 // ------------- SENSORS ----------- //
+}

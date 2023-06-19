@@ -31,6 +31,4 @@ void odometryMove();
 void odometryTurn();
 void odometryGetPosition();
 
-//RobotSetup.cpp
-void robotSetup();
 

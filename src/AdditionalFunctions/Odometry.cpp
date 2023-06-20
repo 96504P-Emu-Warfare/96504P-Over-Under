@@ -73,7 +73,7 @@ void odometryTurn(){
 }
 
 // Uses odometryTracker() to find current location
-void odometryGetPosition(){
+double odometryGetPosition(){
   //return absolutePosition;
   //return absoluteOrientation;
 }

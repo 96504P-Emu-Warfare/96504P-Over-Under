@@ -1,5 +1,5 @@
 /**************************************************************
-                 Drive Control 
+                 DRIVE CONTROL 
 
 This is the drive code for the robot during OpControl
 

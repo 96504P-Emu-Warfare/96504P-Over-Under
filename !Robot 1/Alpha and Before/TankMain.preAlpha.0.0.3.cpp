@@ -6,13 +6,13 @@ executed. Broken down into intialize, disabled, competition_initialize,
 autonomous and opcontrol.
 
 Created 6/16/23
-Last update 6/18/23
+Last update 6/20/23
 
 ****************************************************************/
+
 #include "main.h"
 
 using namespace pros;
-
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -22,19 +22,24 @@ using namespace pros;
  */
 void initialize()
 {
+	// Opening branding on controller and brain
+	branding();
 
-	pros::delay(500); // Stop the user from doing anything while legacy ports configure.
+	pros::delay(2000); // Stop the user from doing anything while legacy ports configure.
 
 	// Configure your chassis controls
-	chassis.set_active_brake(0.1); // Sets the active brake kP
 	default_constants();
 	exit_condition_defaults();
 
-	AutonSelector();
-	
+	// Select the autonomous on brain screen
+	autonSelector();
+
 	// Initialize chassis and auton selector
 	chassis.initialize();
 	ez::as::initialize();
+
+	// Create the controller screen tasks
+	Task controllerScreen(controllerSetup);
 }
 
 /**

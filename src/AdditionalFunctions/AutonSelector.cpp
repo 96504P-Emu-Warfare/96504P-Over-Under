@@ -1,6 +1,14 @@
+/**************************************************************
+                AUTONOMOUS SELECTOR
+
+Where autonomous routines are selected, called in main during initialize.
+
+Created 6/16/23
+Last update 6/20/23
+
+****************************************************************/
 
 #include "main.h"
-
 
 using namespace pros;
 

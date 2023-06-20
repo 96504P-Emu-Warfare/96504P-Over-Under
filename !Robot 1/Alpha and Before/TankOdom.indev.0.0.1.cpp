@@ -1,3 +1,15 @@
+/**************************************************************
+                  ODOMETRY 
+
+The main file for the code, where everything is called and 
+executed. Broken down into intialize, disabled, competition_initialize, 
+autonomous and opcontrol.
+
+Created 6/16/23
+Last update 6/20/23
+
+****************************************************************/
+
 #include <iostream>
 #include "main.h"
 #include <math.h>

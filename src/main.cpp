@@ -22,8 +22,10 @@ using namespace pros;
  */
 void initialize()
 {
+	// Opening branding on controller and brain
+	branding();
 
-	pros::delay(500); // Stop the user from doing anything while legacy ports configure.
+	pros::delay(2000); // Stop the user from doing anything while legacy ports configure.
 
 	// Configure your chassis controls
 	default_constants();

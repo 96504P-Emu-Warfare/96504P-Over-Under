@@ -23,7 +23,7 @@ using namespace pros;
 // Motor overheat warning
 void overheatWarning(int motorHeat, Controller Controller){
     if (motorHeat > 74) {
-    Controller1.set_text(2,0, "DRIVE MOTOR OVERHEAT WARNING: " + motorHeat);
+    Controller.set_text(2,0, "DRIVE MOTOR OVERHEAT WARNING: " + motorHeat);
     }   
 }
 

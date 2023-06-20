@@ -35,4 +35,9 @@ void odometryMove();
 void odometryTurn();
 void odometryGetPosition();
 
+//InitializeBranding.cpp
+void branding();
+void controllerBranding();
+void brainBranding();
+
 

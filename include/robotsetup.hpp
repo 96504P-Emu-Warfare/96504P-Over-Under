@@ -17,3 +17,7 @@ extern Motor MR;
 
 extern Controller Controller1;
 extern Controller Controller2;
+
+extern Rotation RotationL;
+extern Rotation RotationR;
+extern Rotation RotationB;

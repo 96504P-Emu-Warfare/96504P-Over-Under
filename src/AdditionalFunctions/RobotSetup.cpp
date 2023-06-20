@@ -78,3 +78,7 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 // ------------- PNEUMATICS ----------- //
 
 // ------------- SENSORS ----------- //
+Rotation RotationL(7);
+Rotation RotationR(8);
+Rotation RotationB(9);
+

@@ -1,23 +1,39 @@
-#include <iostream>
+/**************************************************************
+                        ODOMETRY
+
+Odometry program using tracking wheels to track the location of
+the robot and allow for more accurate movement.
+
+Created 6/17/23
+Last update 6/20/23
+
+****************************************************************/
+
 #include "main.h"
 #include <math.h>
 
+using namespace pros;
 
 // Constants
 const double WHEEL_RADIUS = 2.0; // inches
 
 // Global variables
-double prevLeftEncoder = 0.0;
-double prevRightEncoder = 0.0;
-double prevOrientation = 0.0;
-double prevPositionX = 0.0;
-double prevPositionY = 0.0;
+double prevLeftEncoder;
+double prevRightEncoder;
+double prevOrientation;
+double prevPositionX;
+double prevPositionY;
 double totalLeftEncoderChange;
 double totalRightEncoderChange;
 
 // Used to get the enocdear value of the rotational sensor of a port
-float getEncoderValue(int port) {
-  return 1;
+double getEncoderValue(Rotation rotSensor) {
+  return rotSensor.get_position();
+}
+
+// Used to convert encoder value to distance in inches - THIS MATH IS LIKELY WRONG
+double convertToInches(double encoderValue) {
+  return encoderValue * 3.14159 / 180 * WHEEL_RADIUS;
 }
 
 // From the notes of PIlons
@@ -26,9 +42,10 @@ float getEncoderValue(int port) {
 void odometryTracker() {
 
   while (true) {
+
   // Store the current encoder values in local variables
-  double currentLeftEncoder = getEncoderValue(1);
-  double currentRightEncoder = getEncoderValue(1);
+  double currentLeftEncoder = getEncoderValue(RotationL);
+  double currentRightEncoder = getEncoderValue(RotationR);
 
   // Calculate the change in each encoder's value since the last cycle
   double leftEncoderChange = currentLeftEncoder - prevLeftEncoder;
@@ -41,7 +58,6 @@ void odometryTracker() {
   // Calculate the total change in the left and right encoder values since the last reset
   totalLeftEncoderChange = totalLeftEncoderChange + currentLeftEncoder; 
   totalRightEncoderChange = totalRightEncoderChange + currentRightEncoder; 
-
 
   // New absolute orientation
 
@@ -63,7 +79,37 @@ void odometryTracker() {
 }
 
 // Movement using simple odometry and PID loop
-void odometryMove(){
+void odometryMove(double inches, int RPM, bool hardstop){
+
+  double initialPositionL = getEncoderValue(RotationL);
+  double initialPositionR = getEncoderValue(RotationR);
+
+  double currentPositionL = initialPositionL;
+  double currentPositionR = initialPositionR;
+
+  while (convertToInches(currentPositionL) < inches || convertToInches(currentPositionR) < inches) {
+      //PID LOOP HERE
+  }
+
+  if (hardstop == false) {
+    FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	  FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	  BL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	  BR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	  ML.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	  MR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  }
+  else {
+    FL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	  FR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	  BL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	  BR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	  ML.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	  MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  }
+
+  motorsStop();
+
   return;
 }
 
@@ -76,4 +122,5 @@ void odometryTurn(){
 double odometryGetPosition(){
   //return absolutePosition;
   //return absoluteOrientation;
+  return 0.0;
 }

@@ -1,23 +1,32 @@
-#include <iostream>
+/**************************************************************
+                        ODOMETRY
+
+Odometry program using tracking wheels to track the location of
+the robot and allow for more accurate movement.
+
+Created 6/17/23
+Last update 6/20/23
+
+****************************************************************/
+
 #include "main.h"
 #include <math.h>
-
 
 // Constants
 const double WHEEL_RADIUS = 2.0; // inches
 
 // Global variables
-double prevLeftEncoder = 0.0;
-double prevRightEncoder = 0.0;
-double prevOrientation = 0.0;
-double prevPositionX = 0.0;
-double prevPositionY = 0.0;
+double prevLeftEncoder;
+double prevRightEncoder;
+double prevOrientation;
+double prevPositionX;
+double prevPositionY;
 double totalLeftEncoderChange;
 double totalRightEncoderChange;
 
 // Used to get the enocdear value of the rotational sensor of a port
-float getEncoderValue(int port) {
-  return 1;
+int getEncoderValue(pros::Rotation rotSensor) {
+  return rotSensor.get_position();
 }
 
 // From the notes of PIlons
@@ -26,9 +35,10 @@ float getEncoderValue(int port) {
 void odometryTracker() {
 
   while (true) {
+
   // Store the current encoder values in local variables
-  double currentLeftEncoder = getEncoderValue(1);
-  double currentRightEncoder = getEncoderValue(1);
+  double currentLeftEncoder = getEncoderValue(RotationL);
+  double currentRightEncoder = getEncoderValue(RotationR);
 
   // Calculate the change in each encoder's value since the last cycle
   double leftEncoderChange = currentLeftEncoder - prevLeftEncoder;
@@ -63,7 +73,8 @@ void odometryTracker() {
 }
 
 // Movement using simple odometry and PID loop
-void odometryMove(){
+void odometryMove(double inches, int RPM){
+  double intialPosition = getEncoderValue();
   return;
 }
 

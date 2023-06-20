@@ -10,6 +10,15 @@ Last update 6/18/23
 
 #include "main.h"
 
+void motorsStop() {
+  FL.move_velocity(0);
+	FR.move_velocity(0);
+	BL.move_velocity(0);
+	BR.move_velocity(0);
+	ML.move_velocity(0);
+	MR.move_velocity(0);
+}
+
 void driverControl() {
 
     // Variables
@@ -18,12 +27,7 @@ void driverControl() {
     int RPM = 600;
 
     // Brain.Timer.clear();
-	FL.move_velocity(0);
-	FR.move_velocity(0);
-	BL.move_velocity(0);
-	BR.move_velocity(0);
-	ML.move_velocity(0);
-	MR.move_velocity(0);
+	motorsStop();
 
 	FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);

@@ -25,15 +25,16 @@ void overheatWarning();
 
 //DriveControl.cpp
 void driverControl();
+void motorsStop();
 extern double left;
 extern double right;
 
 //Odometry.cpp
-float getEncoderValue();
+double getEncoderValue();
 void odometryTracker();
 void odometryMove();
 void odometryTurn();
-void odometryGetPosition();
+double odometryGetPosition();
 
 //InitializeBranding.cpp
 void branding();

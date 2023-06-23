@@ -22,9 +22,9 @@ void motorsStop() {
 void driverControl() {
 
     // Variables
-    float drive_speed;
-    float turn_speed;
-    int RPM = 600;
+    float driveSpeed;
+    float turnSpeed;
+    int maxDriveRPM = 600;
 
     // Brain.Timer.clear();
 	motorsStop();
@@ -99,9 +99,9 @@ void driverControl() {
 
 		double turn = Controller1.get_analog(ANALOG_RIGHT_X);
 
-		double left = (((drive * drive_speed + turn * turn_speed)) / 127 * RPM);
+		double left = (((drive * driveSpeed + turn * turnSpeed)) / 127 * maxDriveRPM);
 
-		double right = (((drive * drive_speed - turn * turn_speed)) / 127 * RPM);
+		double right = (((drive * driveSpeed - turn * turnSpeed)) / 127 * maxDriveRPM);
 
 		FL.move_velocity(left);
 		ML.move_velocity(left);
@@ -113,11 +113,11 @@ void driverControl() {
 		// Speed boost
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
-			drive_speed = 0.9;
+			driveSpeed = 0.9;
 		}
 		else
 		{
-			drive_speed = 0.6;
+			driveSpeed = 0.6;
 		}
 
 		pros::delay(20);

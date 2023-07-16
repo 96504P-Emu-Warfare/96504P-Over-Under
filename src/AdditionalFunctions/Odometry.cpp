@@ -78,19 +78,22 @@ void odometryTracker() {
   }
 }
 
-// Movement using simple odometry and PID loop
+// Movement using simple odometry and PID loop (NO HEADING CORRECTION YET)
 void odometryMove(double inches, int RPM, bool hardstop){
 
+  // These are the local starting points for the movement
   double initialPositionL = getEncoderValue(RotationL);
   double initialPositionR = getEncoderValue(RotationR);
 
+  // These are the values which will be continually updated throughout the movement, initialized based on initial position
   double currentPositionL = initialPositionL;
   double currentPositionR = initialPositionR;
 
-  while (convertToInches(currentPositionL) < inches || convertToInches(currentPositionR) < inches) {
-      //PID LOOP HERE
-  }
+  // These will be changed within each while statement and will be added to the currentPosition values
+  double changeInPositionL;
+  double changeInPositionR;
 
+  // This sets up the braking mode, so the programmer can decide whether to coast or not after movement ends, set on brake by default
   if (hardstop == false) {
     FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	  FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -106,6 +109,31 @@ void odometryMove(double inches, int RPM, bool hardstop){
 	  BR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	  ML.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	  MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  }
+
+  while (convertToInches(currentPositionL) < inches || convertToInches(currentPositionR) < inches) {
+
+    // Initial tracking math
+    double whileStartingPositionL = getEncoderValue(RotationL);
+    double whileStartingPositionR = getEncoderValue(RotationR);
+
+    //PID LOOP HERE
+
+    // Describe the distance each side is from the destination
+    double distanceFromDestinationL = inches - convertToInches(currentPositionL);
+    double distanceFromDestinationR = inches - convertToInches(currentPositionR);
+
+    // Final tracking math
+    double whileEndingPositionL = getEncoderValue(RotationL);
+    double whileEndingPositionR = getEncoderValue(RotationR);
+
+    changeInPositionL = whileEndingPositionL - whileStartingPositionL;
+    changeInPositionR = whileEndingPositionR - whileEndingPositionR;
+
+    currentPositionL = currentPositionL + changeInPositionL;
+    currentPositionR = currentPositionR + changeInPositionR;
+
+    // Heading correction math
   }
 
   motorsStop();

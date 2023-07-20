@@ -20,7 +20,7 @@ void exit_condition_defaults();
 void modified_exit_condition();
 
 //ControllerScreen.cpp
-void controllerSetup();
+void controllerScreenSetup();
 void overheatWarning();
 
 //DriveControl.cpp

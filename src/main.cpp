@@ -39,7 +39,7 @@ void initialize()
 	ez::as::initialize();
 
 	// Create the controller screen tasks
-	Task controllerScreen(controllerSetup);
+	Task controllerScreen(controllerScreenSetup);
 }
 
 /**

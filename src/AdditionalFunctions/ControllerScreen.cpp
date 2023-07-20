@@ -27,7 +27,7 @@ void overheatWarning(int motorHeat, Controller Controller){
     }   
 }
 
-void controllerSetup() {
+void controllerScreenSetup() {
 
 // *************** CONTROLLER 1 - Focused on the drive itself ********************//
 

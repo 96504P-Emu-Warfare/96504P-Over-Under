@@ -3,12 +3,13 @@
 /**************************************************************
 ROBOT SETUP 
 
-Sets up the devices used throughout the program, this includes:
+Sets up the devices and robot variables used throughout the program, this includes:
  - Alliance Color
  - Motors
  - Controllers
  - Pneumatics
  - Sensors
+ - Robot Sizing Specs
 
 Created 6/17/23
 Last update 6/19/23
@@ -40,3 +41,8 @@ Rotation RotationL(7);
 Rotation RotationR(8);
 Rotation RotationB(9);
 
+// ------------- SIZING SPECS ----------- //
+// In inches
+double trackingWheelRadius = 2;
+double trackingWheelWidth = 10;
+double driveWheelRadius = 3;

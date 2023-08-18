@@ -6,6 +6,10 @@ double kP;
 double kI;
 double kD;
 
+int setDriveSpeed() {
+    
+}
+
 int setConstants(string mode) {
     if (mode == "move") {
         kP = 1;
@@ -22,8 +26,6 @@ int setConstants(string mode) {
     }
 }
 
-// In inches
-double trackingWheelRadius = 2;
 double pPowerThreshold = 0.85;
 
 double currentPosition;
@@ -49,7 +51,7 @@ void movePID(double distance) {
     
     while (m == 1) {
         // Find currentPosition
-        currentPosition += ( ((RotationL.get_position() + RotationL.get_position()) / 2) * (M_PI / 360 ) / trackingWheelRadius);
+        currentPosition += ( ((RotationL.get_position() + RotationL.get_position()) / 2) * (M_PI / 180 ) / trackingWheelRadius);
         
         // Find error
         error = setpointDistance - currentPosition;
@@ -66,6 +68,9 @@ void movePID(double distance) {
         prevError = error;
         RotationL.reset_position();
         RotationR.reset_position();
+
+        // Apply motorPower
+        setDriveSpeed(motorPower);
         
         // Don't clog CPU
         delay(50);
@@ -86,13 +91,13 @@ void turnPID(double angle) {
     setpointAngle = angle;
     while (t == 1) {
         // Find currentAngle
-        
+        currentAngle += ((RotationL.get_position() - RotationL.get_position()) / trackingWheelWidth);
         
         // Find error
-        error = setpointDistance - currentPosition;
+        error = setpointAngle - currentAngle;
         
         // Find P,I and D
-        proportional = ( error / setpointDistance ) * pPowerThreshold;
+        proportional = ( error / setpointAngle ) * pPowerThreshold;
         integral += error;
         derivative =  error - prevError;
         

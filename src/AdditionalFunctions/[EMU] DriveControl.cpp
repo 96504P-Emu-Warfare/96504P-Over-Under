@@ -10,15 +10,6 @@ Last update 6/18/23
 
 #include "main.h"
 
-void motorsStop() {
-  FL.move_velocity(0);
-	FR.move_velocity(0);
-	BL.move_velocity(0);
-	BR.move_velocity(0);
-	ML.move_velocity(0);
-	MR.move_velocity(0);
-}
-
 void driverControl() {
 
     // Variables

@@ -29,8 +29,6 @@ void overheatWarning(int motorHeat, Controller Controller){
 
 void controllerScreenSetup() {
 
-// *************** CONTROLLER 1 - Focused on the drive itself ********************//
-
 // Data to be fed to controller
 int batteryCapacity = battery::get_capacity();
 int LdriveSpeed = (FL.get_actual_velocity() + ML.get_actual_velocity() + BL.get_actual_velocity()) / 3;
@@ -42,8 +40,9 @@ int MLheat = ML.get_temperature();
 int BRheat = BR.get_temperature();
 int BLheat = BL.get_temperature();
 
-// Setting text of controller
+// *************** CONTROLLER 1 - Focused on the drive itself ********************//
 
+// Setting text of controller
 while (true) {
 Controller1.set_text(0,0, "BatC: " + std::to_string(batteryCapacity) + "%");
 Controller1.set_text(0,8, "LDS: " + std::to_string(LdriveSpeed) + "RPM");

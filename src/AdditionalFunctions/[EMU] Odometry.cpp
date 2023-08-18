@@ -33,7 +33,7 @@ double getEncoderValue(Rotation rotSensor) {
 
 // Used to convert encoder value to distance in inches - THIS MATH IS LIKELY WRONG
 double convertToInches(double encoderValue) {
-  return encoderValue * 3.14159 / 180 * WHEEL_RADIUS;
+  return encoderValue * M_PI / 180 * WHEEL_RADIUS;
 }
 
 // From the notes of PIlons

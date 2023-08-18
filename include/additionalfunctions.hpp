@@ -21,16 +21,16 @@ void modified_exit_condition();
 
 //ControllerScreen.cpp
 void controllerScreenSetup();
-void overheatWarning();
+void overheatWarning(int motorHeat, Controller Controller);
 
 //DriveControl.cpp
 void driverControl();
-void motorsStop();
 extern double left;
 extern double right;
 
 //Odometry.cpp
-double getEncoderValue();
+double getEncoderValue(Rotation rotSensor);
+double convertToInches(double encoderValue);
 void odometryTracker();
 void odometryMove();
 void odometryTurn();
@@ -38,7 +38,11 @@ double odometryGetPosition();
 
 //InitializeBranding.cpp
 void branding();
-void controllerBranding();
+void controllerBranding(Controller controller);
 void brainBranding();
+
+//MotorControl.cpp
+void setDriveSpeed(double motorpower);
+void motorsStop();
 
 

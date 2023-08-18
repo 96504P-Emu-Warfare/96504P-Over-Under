@@ -21,3 +21,5 @@ extern Controller Controller2;
 extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
+
+extern double M_PI;

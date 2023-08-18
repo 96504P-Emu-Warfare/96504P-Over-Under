@@ -25,9 +25,8 @@ void initialize()
 	// Opening branding on controller and brain
 	branding();
 
-	pros::delay(2000); // Stop the user from doing anything while legacy ports configure
+	pros::delay(2000); // Stop the user from doing anything while legacy ports configure & show branding
 
-	// Configure your chassis controls
 	default_constants();
 	exit_condition_defaults();
 

@@ -9,6 +9,8 @@ Last update 8/18/23
 ****************************************************************/
 #include "main.h"
 
+using namespace pros;
+
 double mathPI = 3.141519;
 
 double kP;
@@ -31,6 +33,9 @@ void setConstants(string mode) {
     }
 }
 
+int m;
+int t;
+
 double pPowerThreshold = 0.85;
 
 double currentPosition;
@@ -45,15 +50,15 @@ double derivative;
 double prevError;
 double motorPower;
 
-int m;
-int t;
 
-void movePID(double distance) {
+void movePID(double distance) 
+{
     //Set PID constants to move mode
     setConstants("move");
     
     setpointDistance = distance;
-    
+    prevError = 0;
+    m = 1;
     while (m == 1) {
         // Find currentPosition
         currentPosition += ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180 ) / driveWheelRadius);
@@ -78,22 +83,26 @@ void movePID(double distance) {
         setDriveSpeed(motorPower);
         
         // Don't clog CPU
-        delay(30);
+        pros::delay(30);
         
         // Exit conditions
         if (error <= 0.1 && derivative <= 0.1) {
-            m = 1;
+            m = 0;
         }
     }
     currentPosition = 0;
-    return;
+    
 }
 
-void turnPID(double angle) {
+void turnPID(double angle) 
+{
     //Set PID constants to turn mode
     setConstants("turn");
+    t = 1;
     
     setpointAngle = angle;
+    prevError = 0;
+
     while (t == 1) {
         // Find currentAngle
         currentAngle += ((ML.get_position() - MR.get_position()) / widthBetweenMiddleWheels);
@@ -118,13 +127,13 @@ void turnPID(double angle) {
         setDriveSpeed(motorPower);
         
         // Don't clog CPU
-        delay(30);
+        pros::delay(30);
         
         // Exit conditions
         if (error <= 0.1 && derivative <= 0.1) {
-            m = 1;
+            t = 0;
         }
     }
     currentAngle = 0;
-    return;
+    
 }

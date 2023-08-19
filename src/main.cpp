@@ -27,18 +27,14 @@ void initialize()
 
 	pros::delay(2000); // Stop the user from doing anything while legacy ports configure & show branding
 
-	default_constants();
-	exit_condition_defaults();
-
 	// Select the autonomous on brain screen
 	autonSelector();
 
 	// Initialize chassis and auton selector
-	chassis.initialize();
 	ez::as::initialize();
 
 	// Create the controller screen tasks
-	Task controllerScreen(controllerScreenSetup);
+	Task controllerScreen(controllerScreenSetupEMU);
 }
 
 /**
@@ -78,10 +74,6 @@ void competition_initialize()
  */
 void autonomous()
 {
-	chassis.reset_pid_targets();				  // Resets PID targets to 0
-	chassis.reset_gyro();						  // Reset gyro position to 0
-	chassis.reset_drive_sensor();				  // Reset drive sensors to 0
-	chassis.set_drive_brake(MOTOR_BRAKE_HOLD);	  // Set motors to hold.  This helps autonomous consistency.
 	ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 

@@ -22,7 +22,7 @@ extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
 
-extern double M_PI;
-extern double trackingWheelRadius;
+extern double mathPI;
+extern double widthBetweenMiddleWheels;
 extern double trackingWheelWidth;
 extern double driveWheelRadius;

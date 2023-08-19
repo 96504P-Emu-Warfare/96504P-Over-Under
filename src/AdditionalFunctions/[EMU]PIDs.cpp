@@ -9,13 +9,13 @@ Last update 8/18/23
 ****************************************************************/
 #include "main.h"
 
-double M_PI = 3.14159265358979323846;
+double mathPI = 3.141519;
 
 double kP;
 double kI;
 double kD;
 
-int setConstants(string mode) {
+void setConstants(string mode) {
     if (mode == "move") {
         kP = 1;
         kI = 1;
@@ -56,7 +56,7 @@ void movePID(double distance) {
     
     while (m == 1) {
         // Find currentPosition
-        currentPosition += ( ((RotationL.get_position() + RotationL.get_position()) / 2) * (M_PI / 180 ) / trackingWheelRadius);
+        currentPosition += ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180 ) / driveWheelRadius);
         
         // Find error
         error = setpointDistance - currentPosition;
@@ -71,14 +71,14 @@ void movePID(double distance) {
         
         // Set up for next loop
         prevError = error;
-        RotationL.reset_position();
-        RotationR.reset_position();
+        ML.tare_position();
+        MR.tare_position();
 
         // Apply motorPower
         setDriveSpeed(motorPower);
         
         // Don't clog CPU
-        delay(50);
+        delay(30);
         
         // Exit conditions
         if (error <= 0.1 && derivative <= 0.1) {
@@ -96,7 +96,7 @@ void turnPID(double angle) {
     setpointAngle = angle;
     while (t == 1) {
         // Find currentAngle
-        currentAngle += ((RotationL.get_position() - RotationL.get_position()) / trackingWheelWidth);
+        currentAngle += ((ML.get_position() - MR.get_position()) / widthBetweenMiddleWheels);
         
         // Find error
         error = setpointAngle - currentAngle;
@@ -111,14 +111,14 @@ void turnPID(double angle) {
         
         // Set up for next loop
         prevError = error;
-        RotationL.reset_position();
-        RotationR.reset_position();
+        ML.tare_position();
+        MR.tare_position();
         
         // Apply motorPower
         setDriveSpeed(motorPower);
         
         // Don't clog CPU
-        delay(50);
+        delay(30);
         
         // Exit conditions
         if (error <= 0.1 && derivative <= 0.1) {

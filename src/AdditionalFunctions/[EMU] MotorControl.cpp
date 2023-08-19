@@ -1,3 +1,12 @@
+/**************************************************************
+                       MOTOR CONTROL
+
+Simple methods used to change motor speeds and behaviors.
+
+Created 8/18/23
+Last update 8/18/23
+
+****************************************************************/
 #include "main.h"
 
 void motorsStop() {
@@ -9,7 +18,7 @@ void motorsStop() {
 	MR.move_velocity(0);
 }
 
-void setDriveSpeed(double motorpower){
+void setDriveSpeed(double motorpower) {
     FL.move_velocity(motorpower);
     FR.move_velocity(motorpower);
 	BL.move_velocity(motorpower);

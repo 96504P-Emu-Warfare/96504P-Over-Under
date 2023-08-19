@@ -1,7 +1,5 @@
-#include "../include/robotsetup.hpp"
-
 /**************************************************************
-ROBOT SETUP 
+                    ROBOT SETUP 
 
 Sets up the devices and robot variables used throughout the program, this includes:
  - Alliance Color
@@ -12,9 +10,10 @@ Sets up the devices and robot variables used throughout the program, this includ
  - Robot Sizing Specs
 
 Created 6/17/23
-Last update 6/19/23
+Last update 8/18/23
 
 ****************************************************************/
+#include "main.h"
 
 using namespace pros;
 

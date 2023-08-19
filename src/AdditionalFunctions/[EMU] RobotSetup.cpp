@@ -18,7 +18,7 @@ Last update 8/18/23
 using namespace pros;
 
 // ------------- ALLIANCE ----------- //
-std::string alliance("blue"); // Blue by default
+std::string alliance("red"); // Red by default
 
 // ------------- MOTORS ----------- //
 // For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards)

@@ -1,3 +1,12 @@
+/**************************************************************
+                        PIDs
+
+PID Methods for autonomous movement
+
+Created 8/18/23
+Last update 8/18/23
+
+****************************************************************/
 #include "main.h"
 
 double M_PI = 3.14159265358979323846;
@@ -5,10 +14,6 @@ double M_PI = 3.14159265358979323846;
 double kP;
 double kI;
 double kD;
-
-int setDriveSpeed() {
-    
-}
 
 int setConstants(string mode) {
     if (mode == "move") {
@@ -108,6 +113,9 @@ void turnPID(double angle) {
         prevError = error;
         RotationL.reset_position();
         RotationR.reset_position();
+        
+        // Apply motorPower
+        setDriveSpeed(motorPower);
         
         // Don't clog CPU
         delay(50);

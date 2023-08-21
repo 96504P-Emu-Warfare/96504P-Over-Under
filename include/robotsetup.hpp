@@ -6,8 +6,6 @@ extern std::string alliance;
 
 using namespace pros;
 
-extern Drive chassis;
-
 extern Motor FL;
 extern Motor FR;
 extern Motor BL;
@@ -22,7 +20,11 @@ extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
 
-extern double M_PI;
-extern double trackingWheelRadius;
+extern double mathPI;
+extern double widthBetweenMiddleWheels;
 extern double trackingWheelWidth;
 extern double driveWheelRadius;
+
+// While Loop conditions, 'm' for move, 't' for turn pids
+extern int m;
+extern int t;

@@ -27,13 +27,13 @@ double totalLeftEncoderChange;
 double totalRightEncoderChange;
 
 // Used to get the enocdear value of the rotational sensor of a port
-double getEncoderValue(Rotation rotSensor) {
+double getSensorEncoderValue(Rotation rotSensor) {
   return rotSensor.get_position();
 }
 
 // Used to convert encoder value to distance in inches - THIS MATH IS LIKELY WRONG
 double convertToInches(double encoderValue) {
-  return encoderValue * M_PI / 180 * WHEEL_RADIUS;
+  return encoderValue * mathPI / 180 * WHEEL_RADIUS;
 }
 
 // From the notes of PIlons
@@ -44,8 +44,8 @@ void odometryTracker() {
   while (true) {
 
   // Store the current encoder values in local variables
-  double currentLeftEncoder = getEncoderValue(RotationL);
-  double currentRightEncoder = getEncoderValue(RotationR);
+  double currentLeftEncoder = getSensorEncoderValue(RotationL);
+  double currentRightEncoder = getSensorEncoderValue(RotationR);
 
   // Calculate the change in each encoder's value since the last cycle
   double leftEncoderChange = currentLeftEncoder - prevLeftEncoder;
@@ -82,8 +82,8 @@ void odometryTracker() {
 void odometryMove(double inches, int RPM, bool hardstop){
 
   // These are the local starting points for the movement
-  double initialPositionL = getEncoderValue(RotationL);
-  double initialPositionR = getEncoderValue(RotationR);
+  double initialPositionL = getSensorEncoderValue(RotationL);
+  double initialPositionR = getSensorEncoderValue(RotationR);
 
   // These are the values which will be continually updated throughout the movement, initialized based on initial position
   double currentPositionL = initialPositionL;
@@ -114,8 +114,8 @@ void odometryMove(double inches, int RPM, bool hardstop){
   while (convertToInches(currentPositionL) < inches || convertToInches(currentPositionR) < inches) {
 
     // Initial tracking math
-    double whileStartingPositionL = getEncoderValue(RotationL);
-    double whileStartingPositionR = getEncoderValue(RotationR);
+    double whileStartingPositionL = getSensorEncoderValue(RotationL);
+    double whileStartingPositionR = getSensorEncoderValue(RotationR);
 
     //PID LOOP HERE
 
@@ -124,8 +124,8 @@ void odometryMove(double inches, int RPM, bool hardstop){
     double distanceFromDestinationR = inches - convertToInches(currentPositionR);
 
     // Final tracking math
-    double whileEndingPositionL = getEncoderValue(RotationL);
-    double whileEndingPositionR = getEncoderValue(RotationR);
+    double whileEndingPositionL = getSensorEncoderValue(RotationL);
+    double whileEndingPositionR = getSensorEncoderValue(RotationR);
 
     changeInPositionL = whileEndingPositionL - whileStartingPositionL;
     changeInPositionR = whileEndingPositionR - whileEndingPositionR;

@@ -42,6 +42,6 @@ Rotation RotationB(9);
 
 // ------------- SIZING SPECS ----------- //
 // In inches
-double trackingWheelRadius = 2;
+double widthBetweenMiddleWheels = 2;
 double trackingWheelWidth = 10;
 double driveWheelRadius = 3;

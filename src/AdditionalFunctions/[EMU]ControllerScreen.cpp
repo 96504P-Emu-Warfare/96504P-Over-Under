@@ -21,13 +21,13 @@ Last update 6/19/23
 using namespace pros;
 
 // Motor overheat warning
-void overheatWarning(int motorHeat, Controller Controller){
+void overheatWarningEMU(int motorHeat, Controller controller){
     if (motorHeat > 74) {
-    Controller.set_text(2,0, "DRIVE MOTOR OVERHEAT WARNING: " + motorHeat);
+    controller.set_text(2,0, "DRIVE MOTOR OVERHEAT WARNING: " + motorHeat);
     }   
 }
 
-void controllerScreenSetup() {
+void controllerScreenSetupEMU() {
 
 // Data to be fed to controller
 int batteryCapacity = battery::get_capacity();
@@ -55,12 +55,12 @@ Controller1.set_text(2,8, "ML: " + std::to_string(MLheat));
 Controller1.set_text(2,16, "BL: " + std::to_string(BLheat));
 
 // Overheat warnings for drive motors
-overheatWarning(FRheat, Controller1);
-overheatWarning(MRheat, Controller1);
-overheatWarning(BRheat, Controller1);
-overheatWarning(FLheat, Controller1);
-overheatWarning(MLheat, Controller1);
-overheatWarning(BLheat, Controller1);
+overheatWarningEMU(FRheat, Controller1);
+overheatWarningEMU(MRheat, Controller1);
+overheatWarningEMU(BRheat, Controller1);
+overheatWarningEMU(FLheat, Controller1);
+overheatWarningEMU(MLheat, Controller1);
+overheatWarningEMU(BLheat, Controller1);
 
 pros::delay(60);
 }

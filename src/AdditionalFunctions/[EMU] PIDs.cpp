@@ -115,7 +115,8 @@ void turnPID(double angle) {
         RotationR.reset_position();
         
         // Apply motorPower
-        setDriveSpeed(motorPower);
+        setDriveSpeed(-motorPower, "Left");
+        setDriveSpeed(motorPower, "Right");
         
         // Don't clog CPU
         delay(50);

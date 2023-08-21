@@ -18,11 +18,24 @@ void motorsStop() {
 	MR.move_velocity(0);
 }
 
-void setDriveSpeed(double motorpower) {
-    FL.move_velocity(motorpower);
-    FR.move_velocity(motorpower);
-	BL.move_velocity(motorpower);
-	BR.move_velocity(motorpower);
-	ML.move_velocity(motorpower);
-	MR.move_velocity(motorpower);
+void setDriveSpeed(double power) {
+    FL.move_velocity(power);
+    FR.move_velocity(power);
+	BL.move_velocity(power);
+	BR.move_velocity(power);
+	ML.move_velocity(power);
+	MR.move_velocity(power);
+}
+
+void setDriveSpeed(double power, string leftOrRight) {
+	if (leftOrRight == "Left") {
+		FL.move_velocity(power);
+		BL.move_velocity(power);
+		ML.move_velocity(power);
+	}
+	if (leftOrRight == "Right") {
+		FR.move_velocity(power);
+		BR.move_velocity(power);
+		MR.move_velocity(power);
+	}
 }

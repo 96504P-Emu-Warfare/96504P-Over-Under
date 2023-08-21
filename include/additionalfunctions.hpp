@@ -36,7 +36,8 @@ void controllerBranding(Controller controller);
 void brainBranding();
 
 //MotorControl.cpp
-void setDriveSpeed(double motorpower);
+void setDriveSpeed(double power);
+void setDriveSpeed(double power, string leftOrRight);
 void motorsStop();
 
 //PIDs.cpp

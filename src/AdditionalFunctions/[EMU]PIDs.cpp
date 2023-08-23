@@ -91,7 +91,6 @@ void movePID(double distance)
         }
     }
     currentPosition = 0;
-    
 }
 
 void turnPID(double angle) 
@@ -136,5 +135,4 @@ void turnPID(double angle)
         }
     }
     currentAngle = 0;
-    
 }

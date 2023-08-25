@@ -22,6 +22,9 @@ using namespace pros;
  */
 void initialize()
 {
+	// Create default settings for motors
+	robotSetup();
+
 	// Opening branding on controller and brain
 	branding();
 
@@ -33,8 +36,11 @@ void initialize()
 	// Initialize chassis and auton selector
 	ez::as::initialize();
 
-	// Create the controller screen tasks
+	// Create the controller screen task
 	Task controllerScreen(controllerScreenSetupEMU);
+
+	// Create the odometry tracking task
+	Task odometry(updatePos);
 }
 
 /**

@@ -5,7 +5,7 @@ Odometry program using tracking wheels to track the location of
 the robot and allow for more accurate movement.
 
 Created 6/17/23
-Last update 6/20/23
+Last update 8/25/23
 
 ****************************************************************/
 
@@ -14,141 +14,53 @@ Last update 6/20/23
 
 using namespace pros;
 
-// Constants
-const double WHEEL_RADIUS = 2.0; // inches
 
 // Global variables
-double prevLeftEncoder;
-double prevRightEncoder;
-double prevOrientation;
-double prevPositionX;
-double prevPositionY;
-double totalLeftEncoderChange;
-double totalRightEncoderChange;
+double xPos;
+double yPos;
+double posArray[2];
+double heading;
+double newDistance;
+
 
 // Used to get the enocdear value of the rotational sensor of a port
 double getSensorEncoderValue(Rotation rotSensor) {
   return rotSensor.get_position();
 }
 
-// Used to convert encoder value to distance in inches - THIS MATH IS LIKELY WRONG
-double convertToInches(double encoderValue) {
-  return encoderValue * mathPI / 180 * WHEEL_RADIUS;
+// Used to convert encoder value to distance in inches 
+double convertToInches(double value) {
+  return value * mathPI / 180 * driveWheelRadius * gearRatio;
 }
 
-// From the notes of PIlons
-// Tracker code that gives position based on original position and last position
+double getCenterPosition(){
+  return convertToInches((MR.get_position() + ML.get_position() / 2));
+}
 
-void odometryTracker() {
-
+void updatePos() {
   while (true) {
-
-  // Store the current encoder values in local variables
-  double currentLeftEncoder = getSensorEncoderValue(RotationL);
-  double currentRightEncoder = getSensorEncoderValue(RotationR);
-
-  // Calculate the change in each encoder's value since the last cycle
-  double leftEncoderChange = currentLeftEncoder - prevLeftEncoder;
-  double rightEncoderChange = currentRightEncoder - prevRightEncoder;
-
-  // Update stored previous values of encoders
-  prevLeftEncoder = currentLeftEncoder;
-  prevRightEncoder = currentRightEncoder;
-
-  // Calculate the total change in the left and right encoder values since the last reset
-  totalLeftEncoderChange = totalLeftEncoderChange + currentLeftEncoder; 
-  totalRightEncoderChange = totalRightEncoderChange + currentRightEncoder; 
-
-  // New absolute orientation
-
-  // Change in angle
-
-  // Local offset
-  
-  // Average orientation
-
-  // Global offset as rotated by avgOrientation
-
-  // New absolute position
-
-  // Update stored "previous values" of orientation and position
-  //prevOrientation = orientation;
-  //prevPositionX = positionX;
-  //prevPositionY = positionY;
-  }
+      heading += Inr.get_heading();
+      newDistance =  getCenterPosition() /  driveWheelRadius;
+      xPos += (-newDistance * sin(heading));
+      yPos += (newDistance * cos(heading));
+      posArray[0] = xPos;
+      posArray[1] = yPos;
+    }
+    
+  delay (30);
 }
 
-// Movement using simple odometry and PID loop (NO HEADING CORRECTION YET)
-void odometryMove(double inches, int RPM, bool hardstop){
-
-  // These are the local starting points for the movement
-  double initialPositionL = getSensorEncoderValue(RotationL);
-  double initialPositionR = getSensorEncoderValue(RotationR);
-
-  // These are the values which will be continually updated throughout the movement, initialized based on initial position
-  double currentPositionL = initialPositionL;
-  double currentPositionR = initialPositionR;
-
-  // These will be changed within each while statement and will be added to the currentPosition values
-  double changeInPositionL;
-  double changeInPositionR;
-
-  // This sets up the braking mode, so the programmer can decide whether to coast or not after movement ends, set on brake by default
-  if (hardstop == false) {
-    FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-	  FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-	  BL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-	  BR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-	  ML.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-	  MR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  }
-  else {
-    FL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	  FR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	  BL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	  BR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	  ML.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	  MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-  }
-
-  while (convertToInches(currentPositionL) < inches || convertToInches(currentPositionR) < inches) {
-
-    // Initial tracking math
-    double whileStartingPositionL = getSensorEncoderValue(RotationL);
-    double whileStartingPositionR = getSensorEncoderValue(RotationR);
-
-    //PID LOOP HERE
-
-    // Describe the distance each side is from the destination
-    double distanceFromDestinationL = inches - convertToInches(currentPositionL);
-    double distanceFromDestinationR = inches - convertToInches(currentPositionR);
-
-    // Final tracking math
-    double whileEndingPositionL = getSensorEncoderValue(RotationL);
-    double whileEndingPositionR = getSensorEncoderValue(RotationR);
-
-    changeInPositionL = whileEndingPositionL - whileStartingPositionL;
-    changeInPositionR = whileEndingPositionR - whileEndingPositionR;
-
-    currentPositionL = currentPositionL + changeInPositionL;
-    currentPositionR = currentPositionR + changeInPositionR;
-
-    // Heading correction math
-  }
-
-  motorsStop();
-
-  return;
+double getPosX() {
+    return xPos;
 }
 
-// Turn using simple odometry and PID loop
-void odometryTurn(){
-  return;
+double getPosY() {
+    return yPos;
 }
 
-// Uses odometryTracker() to find current location
-double odometryGetPosition(){
-  //return absolutePosition;
-  //return absoluteOrientation;
-  return 0.0;
-}
+double getAngle() {
+    return heading;
+} 
+
+
+

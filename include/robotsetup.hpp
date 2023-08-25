@@ -19,11 +19,13 @@ extern Controller Controller2;
 extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
+extern IMU Inr;
 
 extern double mathPI;
 extern double widthBetweenMiddleWheels;
 extern double trackingWheelWidth;
 extern double driveWheelRadius;
+extern double gearRatio;
 
 // While Loop conditions, 'm' for move, 't' for turn pids
 extern int m;

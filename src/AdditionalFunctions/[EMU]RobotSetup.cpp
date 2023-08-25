@@ -10,7 +10,7 @@ Sets up the devices and robot variables used throughout the program, this includ
  - Robot Sizing Specs
 
 Created 6/17/23
-Last update 8/18/23
+Last update 8/25/23
 
 ****************************************************************/
 #include "main.h"
@@ -39,9 +39,25 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 Rotation RotationL(7);
 Rotation RotationR(8);
 Rotation RotationB(9);
+IMU Inr(11);
 
 // ------------- SIZING SPECS ----------- //
 // In inches
 double widthBetweenMiddleWheels = 2;
 double trackingWheelWidth = 10;
 double driveWheelRadius = 3;
+// Should be able to multiply wheel speed and gearRatio to get motor speed
+double gearRatio = (double)54/30;
+
+void robotSetup() {
+
+    // Set up encoder units for motors 
+    FL.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+    FR.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+    BL.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+    BR.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+    ML.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+    MR.set_encoder_units(E_MOTOR_ENCODER_ROTATIONS);
+
+    //
+}

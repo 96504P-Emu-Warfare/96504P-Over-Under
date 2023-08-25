@@ -44,9 +44,11 @@ int BLheat = BL.get_temperature();
 
 // Setting text of controller
 while (true) {
-Controller1.set_text(0,0, "BatC: " + std::to_string(batteryCapacity) + "%");
-Controller1.set_text(0,8, "LDS: " + std::to_string(LdriveSpeed) + "RPM");
-Controller1.set_text(0,16, "RDS: " + std::to_string(RdriveSpeed) + "RPM");
+Controller1.set_text(0,0, "Bat: " + std::to_string(batteryCapacity) + "%");
+//Controller1.set_text(0,8, "LDS: " + std::to_string(LdriveSpeed) + "RPM");
+Controller1.set_text(0,8, "xPOS: " + std::to_string(getPosX()));
+//Controller1.set_text(0,16, "RDS: " + std::to_string(RdriveSpeed) + "RPM");
+Controller1.set_text(0,16, "RDS: " + std::to_string(getPosY()));
 Controller1.set_text(1,0, "FR: " + std::to_string(FRheat));
 Controller1.set_text(1,8, "MR: " + std::to_string(MRheat));
 Controller1.set_text(1,16, "BR: " + std::to_string(BRheat));

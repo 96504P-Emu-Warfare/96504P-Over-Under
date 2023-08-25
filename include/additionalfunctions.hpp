@@ -20,10 +20,11 @@ extern double right;
 //Odometry.cpp
 double getSensorEncoderValue(pros::Rotation rotSensor);
 double convertToInches(double encoderValue);
-void odometryTracker();
-void odometryMove();
-void odometryTurn();
-double odometryGetPosition();
+void updatePos();
+double getPosX();
+double getPosY();
+double getAngle();
+
 
 //InitializeBranding.cpp
 void branding();
@@ -39,5 +40,8 @@ void motorsStop();
 void setConstants(string mode);
 void movePID(double distance);
 void turnPID(double angle);
+
+//RobotSetup.cpp
+void robotSetup();
 
 

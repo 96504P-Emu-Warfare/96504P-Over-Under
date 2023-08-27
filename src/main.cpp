@@ -40,7 +40,7 @@ void initialize()
 	Task controllerScreen(controllerScreenSetupEMU);
 
 	// Create the odometry tracking task
-	Task odometry(updatePos);
+	Task odometry(updatePosTask);
 }
 
 /**

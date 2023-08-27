@@ -54,6 +54,8 @@ class Motor {
 
 	explicit Motor(const std::uint8_t port);
 
+	explicit Motor();
+
 	/****************************************************************************/
 	/**                         Motor movement functions                       **/
 	/**                                                                        **/

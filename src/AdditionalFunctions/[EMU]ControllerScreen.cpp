@@ -44,27 +44,27 @@ int BLheat = BL.get_temperature();
 
 // Setting text of controller
 while (true) {
-Controller1.set_text(0,0, "Bat: " + std::to_string(batteryCapacity) + "%");
-//Controller1.set_text(0,8, "LDS: " + std::to_string(LdriveSpeed) + "RPM");
-Controller1.set_text(0,8, "xPOS: " + std::to_string(getPosX()));
-//Controller1.set_text(0,16, "RDS: " + std::to_string(RdriveSpeed) + "RPM");
-Controller1.set_text(0,16, "RDS: " + std::to_string(getPosY()));
-Controller1.set_text(1,0, "FR: " + std::to_string(FRheat));
-Controller1.set_text(1,8, "MR: " + std::to_string(MRheat));
-Controller1.set_text(1,16, "BR: " + std::to_string(BRheat));
-Controller1.set_text(2,0, "FL: " + std::to_string(FLheat));
-Controller1.set_text(2,8, "ML: " + std::to_string(MLheat));
-Controller1.set_text(2,16, "BL: " + std::to_string(BLheat));
+    Controller1.set_text(0,0, "Bat: " + std::to_string(batteryCapacity) + "%");
+    //Controller1.set_text(0,8, "LDS: " + std::to_string(LdriveSpeed) + "RPM");
+    Controller1.set_text(0,8, "xPos: " + std::to_string(chassis.getXPos()));
+    //Controller1.set_text(0,16, "RDS: " + std::to_string(RdriveSpeed) + "RPM");
+    Controller1.set_text(0,16, "Ypos: " + std::to_string(chassis.getYPos()));
+    Controller1.set_text(1,0, "FR: " + std::to_string(FRheat));
+    Controller1.set_text(1,8, "MR: " + std::to_string(MRheat));
+    Controller1.set_text(1,16, "BR: " + std::to_string(BRheat));
+    Controller1.set_text(2,0, "FL: " + std::to_string(FLheat));
+    Controller1.set_text(2,8, "ML: " + std::to_string(MLheat));
+    Controller1.set_text(2,16, "BL: " + std::to_string(BLheat));
 
-// Overheat warnings for drive motors
-overheatWarningEMU(FRheat, Controller1);
-overheatWarningEMU(MRheat, Controller1);
-overheatWarningEMU(BRheat, Controller1);
-overheatWarningEMU(FLheat, Controller1);
-overheatWarningEMU(MLheat, Controller1);
-overheatWarningEMU(BLheat, Controller1);
+    // Overheat warnings for drive motors
+    overheatWarningEMU(FRheat, Controller1);
+    overheatWarningEMU(MRheat, Controller1);
+    overheatWarningEMU(BRheat, Controller1);
+    overheatWarningEMU(FLheat, Controller1);
+    overheatWarningEMU(MLheat, Controller1);
+    overheatWarningEMU(BLheat, Controller1);
 
-pros::delay(60);
+    pros::delay(60);
 }
 
 // *************** CONTROLLER 2 - Focused on everything else ********************//

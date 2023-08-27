@@ -16,8 +16,8 @@ using namespace pros;
 
 
 // Global variables
-double xPos;
-double yPos;
+double xPos = 0;
+double yPos = 0;
 double posArray[2];
 double heading;
 double newDistance;
@@ -32,35 +32,7 @@ double getSensorEncoderValue(Rotation rotSensor) {
 double convertToInches(double value) {
   return value * mathPI / 180 * driveWheelRadius * gearRatio;
 }
-
-double getCenterPosition(){
-  return convertToInches((MR.get_position() + ML.get_position() / 2));
-}
-
-void updatePos() {
-  while (true) {
-      heading += Inr.get_heading();
-      newDistance =  getCenterPosition() /  driveWheelRadius;
-      xPos += (-newDistance * sin(heading));
-      yPos += (newDistance * cos(heading));
-      posArray[0] = xPos;
-      posArray[1] = yPos;
-    }
-    
-  delay (30);
-}
-
-double getPosX() {
-    return xPos;
-}
-
-double getPosY() {
-    return yPos;
-}
-
-double getAngle() {
-    return heading;
-} 
+ 
 
 
 

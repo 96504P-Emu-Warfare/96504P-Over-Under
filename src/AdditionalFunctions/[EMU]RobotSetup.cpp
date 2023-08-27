@@ -29,6 +29,8 @@ Motor BR(5, E_MOTOR_GEARSET_06, 1);
 Motor ML(3, E_MOTOR_GEARSET_06, 1);
 Motor MR(6, E_MOTOR_GEARSET_06, 1);
 
+drivetrain chassis(3, 6);
+
 // ------------- CONTROLLERS ----------- //
 Controller Controller1(E_CONTROLLER_MASTER);
 Controller Controller2(E_CONTROLLER_PARTNER);

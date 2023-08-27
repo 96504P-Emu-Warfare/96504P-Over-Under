@@ -18,7 +18,7 @@ void driverControl() {
     int maxDriveRPM = 600;
 
     // Brain.Timer.clear();
-	motorsStop();
+	chassis.motorsStop();
 
 	FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);

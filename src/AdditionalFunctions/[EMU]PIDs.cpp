@@ -80,7 +80,7 @@ void movePID(double distance)
         MR.tare_position();
 
         // Apply motorPower
-        setDriveSpeed(motorPower);
+        chassis.setDriveSpeed(motorPower);
         
         // Don't clog CPU
         pros::delay(30);
@@ -123,8 +123,8 @@ void turnPID(double angle)
         MR.tare_position();
         
         // Apply motorPower
-        setDriveSpeed(-motorPower, "Left");
-        setDriveSpeed(motorPower, "Right");
+        chassis.setDriveSpeed(-motorPower, "Left");
+        chassis.setDriveSpeed(motorPower, "Right");
         
         // Don't clog CPU
         pros::delay(30);

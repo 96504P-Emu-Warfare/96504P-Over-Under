@@ -7,6 +7,11 @@ class sensorTL {
     double initRotations;
     double initMotorPositionL;
     double initMotorPositionR;
+    double heading;
+    double rotations;
+    double motorPositionR;
+    double motorPositionL;
+
     public:
     sensorTL();
     void resetTL();
@@ -20,13 +25,13 @@ class sensorTL {
 sensorTL::sensorTL() {
     initHeading = Inr.get_heading();
     initRotations = Inr.get_rotation();
-    initMotorPositionL = convertToInches((FL.get_position() + ML.get_position + BL.get_position) / 3);
-    initMotorPositionR = convertToInches((FR.get_position() + MR.get_position + BR.get_position) / 3);
+    initMotorPositionL = convertToInches((FL.get_position() + ML.get_position() + BL.get_position()) / 3);
+    initMotorPositionR = convertToInches((FR.get_position() + MR.get_position() + BR.get_position()) / 3);
 }
 
-sensorTL::updateTL() {
+void sensorTL::updateTL() {
     heading = Inr.get_heading() - initHeading;
-    rotations = initRotations + Inr.get_rotation() initHeading;
+    rotations = Inr.get_rotation() - initRotations;
     if (heading > 360) {
         heading -= 360;
     }
@@ -35,21 +40,21 @@ sensorTL::updateTL() {
     }
 }
 
-sensorTL::resetTL() {
+void sensorTL::resetTL() {
     initHeading = Inr.get_heading();
     initRotations = Inr.get_rotation();
-    initMotorPositionL = convertToInches((FL.get_position() + ML.get_position + BL.get_position) / 3);
-    initMotorPositionR = convertToInches((FR.get_position() + MR.get_position + BR.get_position) / 3);
+    initMotorPositionL = convertToInches((FL.get_position() + ML.get_position() + BL.get_position()) / 3);
+    initMotorPositionR = convertToInches((FR.get_position() + MR.get_position() + BR.get_position()) / 3);
     heading = initHeading;
     rotations = initRotations;
     motorPositionR = initMotorPositionR;
     motorPositionL = initMotorPositionL;
 }
 
-sensorTL::getHeading() {
+double sensorTL::getHeading() {
     return heading;
 }
 
-sensorTL::getRotation() {
+double sensorTL::getRotation() {
     return rotations;
 }

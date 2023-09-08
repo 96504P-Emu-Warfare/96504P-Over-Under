@@ -21,17 +21,15 @@ extern double right;
 double getSensorEncoderValue(pros::Rotation rotSensor);
 double convertToInches(double encoderValue);
 
-
 //InitializeBranding.cpp
 void branding();
 void controllerBranding(pros::Controller controller);
 void brainBranding();
 
-
 //PIDs.cpp
 void setConstants(string mode);
-void movePID(double distance);
-void turnPID(double angle);
+void moveP(double distance);
+void turnP(double angle);
 
 //RobotSetup.cpp
 void robotSetup();

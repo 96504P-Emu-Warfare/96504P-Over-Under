@@ -21,6 +21,7 @@ extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
 extern IMU Inr;
+extern bool inertialSensor;
 
 extern double mathPI;
 extern double widthBetweenMiddleWheels;

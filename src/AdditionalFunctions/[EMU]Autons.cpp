@@ -16,8 +16,7 @@ Last update 6/18/23
 
 // 
 void moveTest() {
-  movePID(12);
+  moveP(12);
   delay(100);
-  movePID(-12);
-  return;
+  moveP(-12);
 }

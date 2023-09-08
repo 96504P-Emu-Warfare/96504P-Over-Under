@@ -10,7 +10,7 @@ Sets up the devices and robot variables used throughout the program, this includ
  - Robot Sizing Specs
 
 Created 6/17/23
-Last update 8/25/23
+Last update 9/7/23
 
 ****************************************************************/
 #include "main.h"
@@ -42,12 +42,14 @@ Rotation RotationL(7);
 Rotation RotationR(8);
 Rotation RotationB(9);
 IMU Inr(11);
+bool inertialSensor = true;
 
 // ------------- SIZING SPECS ----------- //
 // In inches
 double widthBetweenMiddleWheels = 2;
 double trackingWheelWidth = 10;
 double driveWheelRadius = 3;
+
 // Should be able to multiply wheel speed and gearRatio to get motor speed
 double gearRatio = (double)54/30;
 

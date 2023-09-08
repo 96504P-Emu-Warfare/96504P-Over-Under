@@ -4,7 +4,7 @@
 PID Methods for autonomous movement
 
 Created 8/18/23
-Last update 8/18/23
+Last update 9/7/23
 
 ****************************************************************/
 #include "main.h"
@@ -49,16 +49,38 @@ double integral;
 double derivative;
 double prevError;
 double motorPower;
+double prevMotorPower;
 
+double slew(double curr, double prev) {
+    // Slew rate should be 1 / the amt of cycles of the loop you want it to take to reach full speed from 0
+    double slewRate = 0.05;
+    if (curr > prev + slewRate ) {
+        curr = prev + slewRate;
+    }
+    if (curr < prev - slewRate) {
+        curr = prev - slewRate;
+    }
+    return curr;
+}
 
-void movePID(double distance) 
-{
+double overvoltProtection(double curr) {
+    if (curr > 1) {
+        curr = 1;
+    }
+    if (curr < 0) {
+        curr = 0;
+    }
+    return curr;
+}
+
+void moveP(double distance) {
     //Set PID constants to move mode
     setConstants("move");
     
     setpointDistance = distance;
     prevError = 0;
     m = 1;
+    
     while (m == 1) {
         // Find currentPosition
         currentPosition += ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180 ) / driveWheelRadius);
@@ -80,12 +102,16 @@ void movePID(double distance)
         MR.tare_position();
 
         // Apply motorPower
-        chassis.setDriveSpeed(motorPower);
+        //chassis.setDriveSpeed(motorPower + motorPower * leftCorrection(), "Left");
+        //chassis.setDriveSpeed(motorPower + motorPower * rightCorrection(), "Right");
+
+        chassis.setDriveSpeed(motorPower , "Left");
+        chassis.setDriveSpeed(motorPower , "Right");
         
         // Don't clog CPU
         pros::delay(30);
         
-        // Exit conditions
+        // Exit conditions (NEED TO BE TUNED)
         if (error <= 0.1 && derivative <= 0.1) {
             m = 0;
         }
@@ -93,8 +119,7 @@ void movePID(double distance)
     currentPosition = 0;
 }
 
-void turnPID(double angle) 
-{
+void turnP(double angle) {
     //Set PID constants to turn mode
     setConstants("turn");
     t = 1;
@@ -102,9 +127,24 @@ void turnPID(double angle)
     setpointAngle = angle;
     prevError = 0;
 
+    double getCurrentAngle();
+        if (inertialSensor) {
+            currentAngle = (Inr.get_rotation());
+        }
+        else {
+            currentAngle += ((ML.get_position() - MR.get_position()) / widthBetweenMiddleWheels);
+        }
+
+        
+    currentAngle = 0;
+    
+    if (inertialSensor) {
+        Inr.set_rotation(0);
+    }
+
     while (t == 1) {
         // Find currentAngle
-        currentAngle += ((ML.get_position() - MR.get_position()) / widthBetweenMiddleWheels);
+        currentAngle = getCurrentAngle();
         
         // Find error
         error = setpointAngle - currentAngle;
@@ -119,9 +159,18 @@ void turnPID(double angle)
         
         // Set up for next loop
         prevError = error;
-        ML.tare_position();
-        MR.tare_position();
-        
+        if (inertialSensor == false) {
+            ML.tare_position();
+            MR.tare_position();
+        }
+        else Inr.set_rotation(0);
+
+        // Slewing
+        motorPower = slew(motorPower, prevMotorPower);
+
+        // Overvolt protection
+        motorPower = overvoltProtection(motorPower);
+
         // Apply motorPower
         chassis.setDriveSpeed(-motorPower, "Left");
         chassis.setDriveSpeed(motorPower, "Right");
@@ -129,10 +178,11 @@ void turnPID(double angle)
         // Don't clog CPU
         pros::delay(30);
         
-        // Exit conditions
+        // Exit conditions (NEED TUNING)
         if (error <= 0.1 && derivative <= 0.1) {
             t = 0;
         }
     }
-    currentAngle = 0;
+    // Set up for next call
+    prevMotorPower = motorPower;
 }

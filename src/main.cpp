@@ -28,6 +28,9 @@ void initialize()
 	// Opening branding on controller and brain
 	branding();
 
+	// Initialize the inertial sensor
+	Inr.reset();
+
 	pros::delay(2000); // Stop the user from doing anything while legacy ports configure & show branding
 
 	// Select the autonomous on brain screen

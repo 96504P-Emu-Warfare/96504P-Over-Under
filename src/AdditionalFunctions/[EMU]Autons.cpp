@@ -20,3 +20,11 @@ void moveTest() {
   delay(100);
   moveP(-12);
 }
+
+void turnTest() {
+  turnP(90);
+  delay(1000);
+  turnP(-90);
+  delay(100);
+  turnP(180);
+}

@@ -4,6 +4,7 @@ using namespace std;
 
 //Autons.cpp
 void moveTest();
+void turnTest();
 
 //AutonSelector.cpp
 void autonSelector();

@@ -21,3 +21,23 @@ class drivetrain {
 };
 
 void updatePosTask();
+
+class sensorTL {
+    private:
+        double initHeading;
+        double initRotations;
+        double initMotorPositionL;
+        double initMotorPositionR;
+        double heading;
+        double rotations;
+        double motorPositionR;
+        double motorPositionL;
+
+    public:
+        sensorTL();
+        void resetTL();
+        void updateTL();
+        double getPosition();
+        double getHeading();
+        double getRotation();
+};

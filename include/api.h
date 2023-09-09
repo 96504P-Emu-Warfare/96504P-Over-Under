@@ -75,7 +75,7 @@
 #include "pros/rtos.hpp"
 #include "pros/screen.hpp"
 #include "pros/vision.hpp"
-#include "drivetrain.hpp"
+#include "emuclasses.hpp"
 #endif
 
 #endif  // _PROS_API_H_

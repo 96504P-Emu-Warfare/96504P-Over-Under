@@ -34,7 +34,7 @@ class sensorTL {
         double motorPositionL;
 
     public:
-        sensorTL();
+        sensorTL(void);
         void resetTL();
         void updateTL();
         double getPosition();

@@ -1,6 +1,6 @@
 #include "main.h"
 
-sensorTL::sensorTL() {
+sensorTL::sensorTL(void) {
     initHeading = Inr.get_heading();
     initRotations = Inr.get_rotation();
     initMotorPositionL = convertToInches((FL.get_position() + ML.get_position() + BL.get_position()) / 3);

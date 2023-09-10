@@ -36,9 +36,6 @@ void initialize()
 	// Select the autonomous on brain screen
 	autonSelector();
 
-	// Initialize chassis and auton selector
-	ez::as::initialize();
-
 	// Create the controller screen task
 	Task controllerScreen(controllerScreenSetupEMU);
 
@@ -83,7 +80,6 @@ void competition_initialize()
  */
 void autonomous()
 {
-	ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
 /**
@@ -105,5 +101,5 @@ void opcontrol()
 
 	driverControl();
 
-	pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+	pros::delay(10); 
 }

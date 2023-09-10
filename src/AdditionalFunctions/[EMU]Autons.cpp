@@ -13,9 +13,6 @@ Last update 6/18/23
 ****************************************************************/
 #include "main.h"
 
-sensorTL autonLayer();
-autonLayer.updateTL();
-
 void moveTest() {
   moveP(12);
   delay(100);

@@ -1,17 +1,5 @@
 #include "main.h"
 
-class autonSystem {
-    private:
-        int auton_number;
-        int queue_length;
-    public:
-        autonSystem(int defaultchoice, int queuesize);
-        void setAutonNumber(int number);
-        void forwardOne();
-        void backwardOne();
-        void callAuton();
-};
-
 autonSystem::autonSystem(int defaultchoice, int queuesize) {
     auton_number =  defaultchoice;
     queue_length = queuesize;

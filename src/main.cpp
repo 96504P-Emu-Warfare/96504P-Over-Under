@@ -31,10 +31,11 @@ void initialize()
 	// Initialize the inertial sensor
 	Inr.reset();
 
-	pros::delay(2000); // Stop the user from doing anything while legacy ports configure & show branding
+	while(Inr.is_calibrating()) {
+		pros::delay(200);
+	}
 
-	// Select the autonomous on brain screen
-	autonSelector();
+	//Add autonomous implementation
 
 	// Create the controller screen task
 	Task controllerScreen(controllerScreenSetupEMU);

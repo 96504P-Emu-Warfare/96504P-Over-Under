@@ -12,8 +12,7 @@ Last update 9/7/23
 using namespace pros;
 
 double mathPI = 3.141519;
-sensorTL PIDlayer(void);
-PIDlayer.updateTL();
+sensorTL PIDlayer();
 
 double kP;
 double kI;

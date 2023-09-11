@@ -1,7 +1,5 @@
 #pragma once
 
-#include "EZ-Template/drive/drive.hpp"
-
 extern std::string alliance;
 
 using namespace pros;

@@ -13,6 +13,8 @@ Last update 6/18/23
 ****************************************************************/
 #include "main.h"
 
+sensorTL autonTL;
+
 void moveTest() {
   moveP(12);
   delay(100);

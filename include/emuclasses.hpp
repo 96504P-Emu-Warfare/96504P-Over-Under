@@ -46,6 +46,7 @@ class autonSystem {
     private:
         int auton_number;
         int queue_length;
+        
     public:
         autonSystem(int defaultchoice, int queuesize);
         void setAutonNumber(int number);

@@ -81,6 +81,7 @@ void competition_initialize()
  */
 void autonomous()
 {
+	//Add autonomous implementation
 }
 
 /**

@@ -104,11 +104,11 @@ void driverControl() {
 		// Speed boost
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
-			driveSpeed = 0.9;
+			driveSpeed = 0.6;
 		}
 		else
 		{
-			driveSpeed = 0.6;
+			driveSpeed = 0.3;
 		}
 
 		pros::delay(20);

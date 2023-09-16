@@ -32,7 +32,7 @@ void initialize()
 	Inr.reset();
 
 	while(Inr.is_calibrating()) {
-		pros::delay(200);
+		pros::delay(20);
 	}
 
 	//Add autonomous implementation
@@ -42,6 +42,8 @@ void initialize()
 
 	// Create the odometry tracking task
 	Task odometry(updatePosTask);
+
+	// Tasks for updating TLs
 }
 
 /**

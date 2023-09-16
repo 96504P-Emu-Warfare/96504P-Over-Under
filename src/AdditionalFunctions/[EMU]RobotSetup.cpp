@@ -20,6 +20,9 @@ using namespace pros;
 // ------------- ALLIANCE ----------- //
 std::string alliance("red"); // Red by default
 
+// ------------- AUTONOMOUS ----------- //
+autonSystem autonSelectorP;
+
 // ------------- MOTORS ----------- //
 // For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards)
 Motor FL(1, E_MOTOR_GEARSET_06, 1);

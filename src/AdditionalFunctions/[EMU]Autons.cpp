@@ -28,3 +28,31 @@ void turnTest() {
   delay(100);
   turnP(180);
 }
+
+void nonGoal1() {
+  //flip out triball slapper thing
+  turnP(-90);
+  turnP(-110);
+  moveP(25);
+  //outtake triball
+  //possible slam triball
+  turnP(-20);
+  moveP(-35);
+  turnP(160);
+  moveP(25);
+  //extend arm to touch elevation bar
+}
+
+void goal1() {
+  //flip out triball slapper thing
+  turnP(90);
+  turnP(-110);
+  moveP(24);
+  //outtake triball
+  //possibly slam triball
+  turnP(20);
+  moveP(-30);
+  turnP(-120);
+  moveP(30);
+  //extend arm to touch elevation bar
+}

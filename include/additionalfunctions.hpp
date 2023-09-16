@@ -5,6 +5,8 @@ using namespace std;
 //Autons.cpp
 void moveTest();
 void turnTest();
+void nonGoal1();
+void goal1();
 
 //AutonSelector.cpp
 void autonSelector();

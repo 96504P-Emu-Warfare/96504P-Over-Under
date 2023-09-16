@@ -48,7 +48,7 @@ class autonSystem {
         int queue_length;
         
     public:
-        autonSystem(int defaultchoice, int queuesize);
+        autonSystem(void);
         void setAutonNumber(int number);
         void forwardOne();
         void backwardOne();

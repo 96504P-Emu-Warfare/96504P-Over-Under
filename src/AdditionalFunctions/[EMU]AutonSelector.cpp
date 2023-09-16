@@ -1,8 +1,8 @@
 #include "main.h"
 
-autonSystem::autonSystem(int defaultchoice, int queuesize) {
-    auton_number =  defaultchoice;
-    queue_length = queuesize;
+autonSystem::autonSystem() {
+    auton_number =  1;
+    queue_length = 4;
 }
 
 void autonSystem::setAutonNumber(int number) {
@@ -26,9 +26,19 @@ void autonSystem::backwardOne() {
 void autonSystem::callAuton() {
     if (auton_number == 1) {
         moveTest();
+        return;
     }
     if (auton_number == 2) {
         turnTest();
+        return;
+    }
+    if (auton_number == 3) {
+        nonGoal1();
+        return;
+    }
+    if (auton_number == 4) {
+        nonGoal1();
+        return;
     }
     else {
         return;

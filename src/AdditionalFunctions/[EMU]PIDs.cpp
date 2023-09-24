@@ -20,14 +20,14 @@ double kD;
 
 void setConstants(string mode) {
     if (mode == "move") {
-        kP = 1;
-        kI = 1;
-        kD = 1;
+        kP = .4;
+        kI = .0;
+        kD = .0;
     }
     if  (mode == "turn") {
-        kP = 1;
-        kI = 1;
-        kD = 1;
+        kP = .4;
+        kI = .0;
+        kD = .0;
     }
     else {
         std::cout << "Error: Constants are not set properly";
@@ -36,8 +36,6 @@ void setConstants(string mode) {
 
 int m;
 int t;
-
-double pPowerThreshold = 0.85;
 
 double currentPosition;
 double setpointDistance;
@@ -78,19 +76,23 @@ void moveP(double distance) {
     //Set PID constants to move mode
     setConstants("move");
     
-    setpointDistance = distance;
+    setpointDistance = distance / 100 ;
+    currentPosition = 0;
     prevError = 0;
     m = 1;
+    Controller1.clear();
+    ML.tare_position();
+    MR.tare_position();
     
     while (m == 1) {
         // Find currentPosition
-        currentPosition += ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180 ) / driveWheelRadius);
+        currentPosition = ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180 ) * driveWheelRadius);
         
         // Find error
         error = setpointDistance - currentPosition;
         
         // Find P,I and D
-        proportional = ( error / setpointDistance ) * pPowerThreshold;
+        proportional = ( error / setpointDistance );
         integral += error;
         derivative =  error - prevError;
         
@@ -99,24 +101,30 @@ void moveP(double distance) {
         
         // Set up for next loop
         prevError = error;
-        ML.tare_position();
-        MR.tare_position();
 
         // Apply motorPower
         //chassis.setDriveSpeed(motorPower + motorPower * leftCorrection(), "Left");
         //chassis.setDriveSpeed(motorPower + motorPower * rightCorrection(), "Right");
 
-        chassis.setDriveSpeed(motorPower , "Left");
-        chassis.setDriveSpeed(motorPower , "Right");
+        FL.move_velocity(motorPower * 600);
+		BL.move_velocity(motorPower * 600);
+		ML.move_velocity(motorPower * 600);
+		FR.move_velocity(motorPower * 600);
+		BR.move_velocity(motorPower * 600);
+		MR.move_velocity(motorPower * 600);
         
         // Don't clog CPU
         pros::delay(30);
+         
+        Controller1.set_text(0, 1, to_string(motorPower));
+        Controller1.set_text(1, 1, to_string(proportional));
+        Controller1.set_text(2, 1, to_string(currentPosition));
         
         // Exit conditions (NEED TO BE TUNED)
-        if (error <= 0.1 && derivative <= 0.1) {
+        if (error <= 0.1) {
             m = 0;
         }
-    }
+    } 
     currentPosition = 0;
 }
 
@@ -127,31 +135,22 @@ void turnP(double angle) {
     
     setpointAngle = angle;
     prevError = 0;
-
-    double getCurrentAngle();
-        if (inertialSensor) {
-            currentAngle = (Inr.get_rotation());
-        }
-        else {
-            currentAngle += ((ML.get_position() - MR.get_position()) / widthBetweenMiddleWheels);
-        }
-
         
     currentAngle = 0;
     
     if (inertialSensor) {
-        Inr.set_rotation(0);
+        Inr.set_heading(0);
     }
 
     while (t == 1) {
         // Find currentAngle
-        currentAngle = getCurrentAngle();
+        currentAngle = (Inr.get_heading());
         
         // Find error
         error = setpointAngle - currentAngle;
         
         // Find P,I and D
-        proportional = ( error / setpointAngle ) * pPowerThreshold;
+        proportional = ( error / setpointAngle );
         integral += error;
         derivative =  error - prevError;
         
@@ -160,11 +159,6 @@ void turnP(double angle) {
         
         // Set up for next loop
         prevError = error;
-        if (inertialSensor == false) {
-            ML.tare_position();
-            MR.tare_position();
-        }
-        else Inr.set_rotation(0);
 
         // Slewing
         motorPower = slew(motorPower, prevMotorPower);
@@ -173,17 +167,29 @@ void turnP(double angle) {
         motorPower = overvoltProtection(motorPower);
 
         // Apply motorPower
-        chassis.setDriveSpeed(-motorPower, "Left");
-        chassis.setDriveSpeed(motorPower, "Right");
+        //chassis.setDriveSpeed(-motorPower, "Left");
+        //chassis.setDriveSpeed(motorPower, "Right");
+        FL.move_velocity(motorPower * 600);
+		BL.move_velocity(motorPower * 600);
+		ML.move_velocity(motorPower * 600);
+		FR.move_velocity(-motorPower * 600);
+		BR.move_velocity(-motorPower * 600);
+		MR.move_velocity(-motorPower * 600);
+
+        //set up for next loop
+        prevMotorPower = motorPower;
         
         // Don't clog CPU
         pros::delay(30);
         
+        Controller1.set_text(0, 1, to_string(motorPower));
+        Controller1.set_text(1, 1, to_string(proportional));
+        Controller1.set_text(2, 1, to_string(currentPosition));
+
         // Exit conditions (NEED TUNING)
         if (error <= 0.1 && derivative <= 0.1) {
             t = 0;
         }
     }
-    // Set up for next call
-    prevMotorPower = motorPower;
+    
 }

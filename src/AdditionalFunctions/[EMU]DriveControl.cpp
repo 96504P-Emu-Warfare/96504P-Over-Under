@@ -13,12 +13,11 @@ Last update 6/18/23
 void driverControl() {
 
     // Variables
-    float driveSpeed;
-    float turnSpeed;
-    int maxDriveRPM = 600;
+    float driveSpeed = .8;
+    float turnSpeed = .2;
 
     // Brain.Timer.clear();
-	chassis.motorsStop();
+	//chassis.motorsStop();
 
 	FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	FR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -43,6 +42,7 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
 		{
+			moveTest();
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2))
@@ -59,10 +59,12 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
+			moveP(12);
 		}
 
 		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
+			turnP(90);
 		}
 
 		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R1))
@@ -90,9 +92,9 @@ void driverControl() {
 
 		double turn = Controller1.get_analog(ANALOG_RIGHT_X);
 
-		double left = (((drive * driveSpeed + turn * turnSpeed)) / 127 * maxDriveRPM);
+		double left = (((drive * driveSpeed + turn * turnSpeed)) / 127 * 600);
 
-		double right = (((drive * driveSpeed - turn * turnSpeed)) / 127 * maxDriveRPM);
+		double right = (((drive * driveSpeed - turn * turnSpeed)) / 127 * 600);
 
 		FL.move_velocity(left);
 		ML.move_velocity(left);
@@ -100,16 +102,6 @@ void driverControl() {
 		FR.move_velocity(right);
 		MR.move_velocity(right);
 		BR.move_velocity(right);
-
-		// Speed boost
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1))
-		{
-			driveSpeed = 0.6;
-		}
-		else
-		{
-			driveSpeed = 0.3;
-		}
 
 		pros::delay(20);
 	}

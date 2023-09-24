@@ -41,6 +41,6 @@ void autonSystem::callAuton() {
         return;
     }
     else {
-        return;
+        turnTest();
     }
 }

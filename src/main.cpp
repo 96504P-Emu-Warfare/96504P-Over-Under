@@ -26,7 +26,7 @@ void initialize()
 	robotSetup();
 
 	// Opening branding on controller and brain
-	branding();
+	//branding();
 
 	// Initialize the inertial sensor
 	Inr.reset();
@@ -34,14 +34,16 @@ void initialize()
 	while(Inr.is_calibrating()) {
 		pros::delay(20);
 	}
-
+	turnP(90);
+	turnP(180);
+ 	
 	//Add autonomous implementation
 
 	// Create the controller screen task
-	Task controllerScreen(controllerScreenSetupEMU);
+	//Task controllerScreen(controllerScreenSetupEMU);
 
 	// Create the odometry tracking task
-	Task odometry(updatePosTask);
+	//Task odometry(updatePosTask);
 
 	// Tasks for updating TLs
 }

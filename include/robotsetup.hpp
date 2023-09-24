@@ -4,7 +4,7 @@ extern std::string alliance;
 
 using namespace pros;
 
-autonSystem autonSelectorP;
+extern autonSystem autonSelectorP;
 
 extern Motor FL;
 extern Motor FR;

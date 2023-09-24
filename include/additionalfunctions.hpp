@@ -8,9 +8,6 @@ void turnTest();
 void nonGoal1();
 void goal1();
 
-//AutonSelector.cpp
-void autonSelector();
-
 //ControllerScreen.cpp
 void controllerScreenSetupEMU();
 void overheatWarningEMU(int motorHeat, pros::Controller controller);

@@ -24,13 +24,21 @@ std::string alliance("red"); // Red by default
 autonSystem autonSelectorP;
 
 // ------------- MOTORS ----------- //
-// For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards)
-Motor FL(1, E_MOTOR_GEARSET_06, 1);
-Motor FR(4, E_MOTOR_GEARSET_06, 1);
+// For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards) 1/4 forwards
+/**Motor FL(3, E_MOTOR_GEARSET_06, 1);
+Motor FR(6, E_MOTOR_GEARSET_06, 0);
 Motor BL(2, E_MOTOR_GEARSET_06, 1);
-Motor BR(5, E_MOTOR_GEARSET_06, 1);
-Motor ML(3, E_MOTOR_GEARSET_06, 1);
-Motor MR(6, E_MOTOR_GEARSET_06, 1);
+Motor BR(5, E_MOTOR_GEARSET_06, 0);
+Motor ML(1, E_MOTOR_GEARSET_06, 0);
+Motor MR(4, E_MOTOR_GEARSET_06, 0);*/
+
+//LUKE BOT CONFIG
+Motor FL(8, E_MOTOR_GEARSET_06, 0);
+Motor FR(11, E_MOTOR_GEARSET_06, 1);
+Motor BL(9, E_MOTOR_GEARSET_06, 1);
+Motor BR(12, E_MOTOR_GEARSET_06, 0);
+Motor ML(10, E_MOTOR_GEARSET_06, 1);
+Motor MR(13, E_MOTOR_GEARSET_06, 0);
 
 drivetrain chassis(3, 6);
 
@@ -38,20 +46,22 @@ drivetrain chassis(3, 6);
 Controller Controller1(E_CONTROLLER_MASTER);
 Controller Controller2(E_CONTROLLER_PARTNER);
 
+//------------- RADIO -----------//
+//pros::Link radio(20, "Robot1", pros::E_LINK_TRANSMITTER);
+
 // ------------- PNEUMATICS ----------- //
 
 // ------------- SENSORS ----------- //
-Rotation RotationL(7);
-Rotation RotationR(8);
-Rotation RotationB(9);
-IMU Inr(11);
+//Rotation RotationL(7);
+//Rotation RotationR(8);
+//Rotation RotationB(9);
+IMU Inr(18);
 bool inertialSensor = true;
 
 // ------------- SIZING SPECS ----------- //
 // In inches
-double widthBetweenMiddleWheels = 2;
-double trackingWheelWidth = 10;
-double driveWheelRadius = 3;
+double widthBetweenMiddleWheels = 8;
+double driveWheelRadius = 3.25;
 
 // Should be able to multiply wheel speed and gearRatio to get motor speed
 double gearRatio = (double)54/30;

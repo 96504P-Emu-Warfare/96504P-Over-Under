@@ -23,6 +23,7 @@ using namespace pros;
 void initialize()
 {
 	// Create default settings for motors
+	Controller1.set_text(2, 0, "Setting up");
 	robotSetup();
 
 	// Opening branding on controller and brain
@@ -34,8 +35,6 @@ void initialize()
 	while(Inr.is_calibrating()) {
 		pros::delay(20);
 	}
-	turnP(90);
-	turnP(180);
  	
 	//Add autonomous implementation
 
@@ -104,6 +103,7 @@ void autonomous()
 void opcontrol()
 {
 	pros::lcd::set_text(0, "OpControl is Now Running");
+	Controller1.set_text(2, 0, "Running");
 
 	driverControl();
 

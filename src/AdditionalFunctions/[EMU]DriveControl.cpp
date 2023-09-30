@@ -26,18 +26,27 @@ void driverControl() {
 	ML.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	MR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
+	
+
 	/**
 	 * BUTTON INPUT SYSTEM
 	 */
+	
 
 	while (true)
 	{
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
-		{
-		}
+		void controllerScreenSetupEMU();
+		
+		// CONTROLLER 1
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
+			moveP(20);
+		}
+
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_A))
+		{
+			turnP(90);
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
@@ -47,6 +56,9 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2))
 		{
+			while (true) {
+				Controller1.set_text(0,0, to_string(Inr.get_rotation()));
+			}
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_UP))
@@ -59,8 +71,10 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
-			moveP(12);
+			scrim1();
 		}
+
+		// CONTROLLER 2
 
 		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{

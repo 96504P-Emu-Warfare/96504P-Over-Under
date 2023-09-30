@@ -56,3 +56,19 @@ void goal1() {
   moveP(30);
   //extend arm to touch elevation bar
 }
+
+void scrim1() {
+  Controller1.set_text(0,1, "Running Scrim 1");
+  moveP(30);
+  turnP(100);
+  moveP(12);
+  //outtake
+  moveP(-12);
+  turnP(-145);
+  //intaking
+  moveP(10);
+  moveP(-10);
+  turnP(145);
+  moveP(12);
+  //outtake
+}

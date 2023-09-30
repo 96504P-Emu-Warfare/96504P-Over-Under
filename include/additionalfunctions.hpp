@@ -7,6 +7,7 @@ void moveTest();
 void turnTest();
 void nonGoal1();
 void goal1();
+void scrim1();
 
 //ControllerScreen.cpp
 void controllerScreenSetupEMU();

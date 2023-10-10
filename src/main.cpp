@@ -35,6 +35,8 @@ void initialize()
 	while(Inr.is_calibrating()) {
 		pros::delay(20);
 	}
+
+	Controller1.set_text(2, 0, "Done setting up");
  	
 	//Add autonomous implementation
 
@@ -84,7 +86,7 @@ void competition_initialize()
  */
 void autonomous()
 {
-	//Add autonomous implementation
+	//callAuton();
 }
 
 /**

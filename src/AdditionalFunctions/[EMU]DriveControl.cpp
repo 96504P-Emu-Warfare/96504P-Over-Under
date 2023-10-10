@@ -13,8 +13,8 @@ Last update 6/18/23
 void driverControl() {
 
     // Variables
-    float driveSpeed = .8;
-    float turnSpeed = .2;
+    float driveSpeed = .9;
+    float turnSpeed = .4;
 
     // Brain.Timer.clear();
 	//chassis.motorsStop();
@@ -36,12 +36,13 @@ void driverControl() {
 	while (true)
 	{
 		void controllerScreenSetupEMU();
+
+		getAutonNumber();
 		
 		// CONTROLLER 1
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
-			moveP(20);
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_A))
@@ -51,14 +52,16 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
 		{
-			moveTest();
 		}
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2))
-		{
-			while (true) {
-				Controller1.set_text(0,0, to_string(Inr.get_rotation()));
-			}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2)){
+			CR.move_velocity(-127);
+		}
+		else if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			CR.move(127);
+		} 
+		else {
+			CR.move(0);
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_UP))
@@ -67,11 +70,24 @@ void driverControl() {
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_DOWN))
 		{
+			moveP(40);
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
-			scrim1();
+			
+		}
+
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y))
+		{
+			callAuton();
+		}
+
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_LEFT)) {
+			forwardOne();
+		}
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) {
+			backwardOne();
 		}
 
 		// CONTROLLER 2
@@ -110,6 +126,9 @@ void driverControl() {
 
 		double right = (((drive * driveSpeed - turn * turnSpeed)) / 127 * 600);
 
+		if (left > 600) {left = 600;} else if (left < -600) {left = -600;}
+		if (right > 600) {right = 600;} else if (right < -600) {right = -600;}
+		
 		FL.move_velocity(left);
 		ML.move_velocity(left);
 		BL.move_velocity(left);
@@ -117,6 +136,9 @@ void driverControl() {
 		MR.move_velocity(right);
 		BR.move_velocity(right);
 
+		Controller1.set_text(0,1, to_string(left) + " " + to_string(right));
+
 		pros::delay(20);
+
 	}
 }

@@ -21,7 +21,6 @@ using namespace pros;
 std::string alliance("red"); // Red by default
 
 // ------------- AUTONOMOUS ----------- //
-autonSystem autonSelectorP;
 
 // ------------- MOTORS ----------- //
 bool lukeBot = false;
@@ -42,6 +41,8 @@ bool lukeBot = false;
     Motor BR(5, E_MOTOR_GEARSET_06, 0);
     Motor ML(8, E_MOTOR_GEARSET_06, 0);
     Motor MR(4, E_MOTOR_GEARSET_06, 1);
+    Motor CL(17, E_MOTOR_GEARSET_18, 1);
+    Motor CR(18, E_MOTOR_GEARSET_18, 1);
     drivetrain chassis(3, 6);
 
 // ------------- CONTROLLERS ----------- //
@@ -57,7 +58,7 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 //Rotation RotationL(7);
 //Rotation RotationR(8);
 //Rotation RotationB(9);
-IMU Inr(11);
+IMU Inr(16);
 bool inertialSensor = true;
 
 // ------------- SIZING SPECS ----------- //

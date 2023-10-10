@@ -1,29 +1,31 @@
 #include "main.h"
 
-autonSystem::autonSystem() {
-    auton_number =  1;
-    queue_length = 4;
-}
+int auton_number =  1;
+int queue_length = 4;
 
-void autonSystem::setAutonNumber(int number) {
+void setAutonNumber(int number) {
     auton_number = number;
 }
 
-void autonSystem::forwardOne() {
+void forwardOne() {
     auton_number += 1;
     if (auton_number > queue_length) {
         auton_number = 1;
     }
 }
 
-void autonSystem::backwardOne() {
+void getAutonNumber() {
+    Controller1.set_text(0,0, to_string(auton_number));
+}
+
+void backwardOne() {
     auton_number -= 1;
     if (auton_number < 1) {
         auton_number = queue_length;
     }
 }
 
-void autonSystem::callAuton() {
+void callAuton() {
     if (auton_number == 1) {
         moveTest();
         return;

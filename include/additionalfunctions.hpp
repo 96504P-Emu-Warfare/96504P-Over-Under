@@ -9,6 +9,15 @@ void nonGoal1();
 void goal1();
 void scrim1();
 
+// AutonSelector.cpp
+extern int auton_number;
+extern int queue_length;
+void setAutonNumber(int number);
+void forwardOne();
+void backwardOne();
+void callAuton();
+void getAutonNumber();
+
 //ControllerScreen.cpp
 void controllerScreenSetupEMU();
 void overheatWarningEMU(int motorHeat, pros::Controller controller);

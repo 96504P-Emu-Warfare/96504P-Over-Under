@@ -12,6 +12,8 @@ extern Motor BL;
 extern Motor BR;
 extern Motor ML;
 extern Motor MR;
+extern Motor CL;
+extern Motor CR;
 extern drivetrain chassis;
 
 extern Controller Controller1;

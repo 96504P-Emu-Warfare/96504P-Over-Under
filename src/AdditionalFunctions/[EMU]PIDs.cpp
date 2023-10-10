@@ -17,17 +17,26 @@ sensorTL PIDlayer;
 double kP;
 double kI;
 double kD;
+double slewRate;
 
 void setConstants(string mode) {
     if (mode == "move") {
-        kP = .001;
-        kI = .0002;
-        kD = .0002;
+        kP = 1.2;
+        kI = 0;
+        kD = .01;
+        slewRate = 0.05;
     }
-    if  (mode == "turn") {
-        kP = .2;
-        kI = .0001;
-        kD = .0008;
+    if  (mode == "turnShort") {
+        kP = .8;
+        kI = .0;
+        kD = .02;
+        slewRate = 0.04;
+    }
+    if  (mode == "turnLong") {
+        kP = 1.6;
+        kI = .0;
+        kD = .03;
+        slewRate = 0.03;
     }
     else {
         std::cout << "Error: Constants are not set properly";
@@ -50,9 +59,10 @@ double prevError;
 double motorPower;
 double prevMotorPower;
 
+double correctionError;
+
 double slew(double curr, double prev) {
     // Slew rate should be 1 / the amt of cycles of the loop you want it to take to reach full speed from 0
-    double slewRate = 0.05;
     if (curr > prev + slewRate ) {
         curr = prev + slewRate;
     }
@@ -72,6 +82,21 @@ double overvoltProtection(double curr) {
     return curr;
 }
 
+void resetValues() {
+    currentPosition = 0;
+    setpointDistance = 0;
+    currentAngle = 0;
+    setpointAngle = 0;
+    error = 0;
+    proportional = 0;
+    integral = 0;
+    derivative = 0;
+    prevError = 0;
+    motorPower = 0;
+    prevMotorPower = 0;
+    correctionError = 0;
+}
+
 void moveP(double distance) {
 
     FL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -87,63 +112,68 @@ void moveP(double distance) {
     setpointDistance = distance;
     currentPosition = 0;
     prevError = 0;
+    prevMotorPower = 0;
     m = 1;
     Controller1.clear();
-    ML.tare_position();
-    MR.tare_position();
+    ML.set_zero_position(0);
+    MR.set_zero_position(0);
     
     while (m == 1) {
-        // Find currentPosition
+
+
+        // Find currentPosition 
         currentPosition = ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180) * 0.6 * driveWheelRadius);
+        correctionError = Inr.get_rotation();
         
         // Find error
         error = setpointDistance - currentPosition;
         
         // Find P,I and D
-        proportional = ( error / setpointDistance );
+        proportional = ( abs(error) / setpointDistance );
         integral += error;
-        derivative = error - prevError;
+        derivative =  error - prevError;
         
         // Motor power output
         motorPower =  kP*proportional + kI*integral + kD*derivative;
         
-        // Set up for next loop
-        prevError = error;
-
-        // Apply motorPower
-        //chassis.setDriveSpeed(motorPower + motorPower * leftCorrection(), "Left");
-        //chassis.setDriveSpeed(motorPower + motorPower * rightCorrection(), "Right");
-
-        FL.move_velocity(motorPower * 600);
-		BL.move_velocity(motorPower * 600);
-		ML.move_velocity(motorPower * 600);
-		FR.move_velocity(motorPower * 600);
-		BR.move_velocity(motorPower * 600);
-		MR.move_velocity(motorPower * 600);
-
         // Slewing
         motorPower = slew(motorPower, prevMotorPower);
 
         // Overvolt protection
         motorPower = overvoltProtection(motorPower);
-        
-        // Don't clog CPU
 
+        // Apply power
+        FL.move_velocity(motorPower * 400);
+		BL.move_velocity(motorPower * 400);
+		ML.move_velocity(motorPower * 400);
+		FR.move_velocity(motorPower * 400);
+		BR.move_velocity(motorPower * 400);
+		MR.move_velocity(motorPower * 400);
+        
+        // Exit conditions (NEED TO BE TUNED)
+        if (abs(error) <= 0.2) {
+            m = 0;
+            FL.move_velocity(motorPower * 0);
+            BL.move_velocity(motorPower * 0);
+            ML.move_velocity(motorPower * 0);
+            FR.move_velocity(motorPower * 0);
+            BR.move_velocity(motorPower * 0);
+            MR.move_velocity(motorPower * 0);
+        }
+
+        //set up for next loop
+        prevError = error;
+        prevMotorPower = motorPower;
+
+        // Don't clog CPU
         Controller1.set_text(0, 1, "e/p: " + to_string(currentPosition) + " " + to_string(error));
         Controller1.set_text(1, 1, "powerM" + to_string(motorPower));
         Controller1.set_text(2, 1, to_string(currentPosition));
         
         pros::delay(30);
         
-        // Exit conditions (NEED TO BE TUNED)
-        if (abs(error) <= 1) {
-            m = 0;
-        }
     } 
-    currentPosition = 0;
-    proportional = 0;
-    integral = 0;
-    derivative = 0;
+    resetValues();
 }
 
 void turnP(double angle) {
@@ -156,7 +186,9 @@ void turnP(double angle) {
 	MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
     //Set PID constants to turn mode
-    setConstants("turn");
+    if (angle > 120) {setConstants("turnLong");}
+    else {setConstants("turnShort");}
+
     t = 1;
     
     setpointAngle = angle;
@@ -177,16 +209,13 @@ void turnP(double angle) {
         error = setpointAngle - currentAngle;
         
         // Find P,I and D
-        proportional = ( error / setpointAngle );
+        proportional = ( abs(error) / setpointAngle );
         integral += error;
         derivative =  error - prevError;
         
         // Motor power output
         motorPower =  kP*proportional + kI*integral + kD*derivative;
         
-        // Set up for next loop
-        prevError = error;
-
         // Slewing
         motorPower = slew(motorPower, prevMotorPower);
 
@@ -196,25 +225,26 @@ void turnP(double angle) {
         // Apply motorPower
         //chassis.setDriveSpeed(-motorPower, "Left");
         //chassis.setDriveSpeed(motorPower, "Right");
-        FL.move_velocity(motorPower * 600);
-		BL.move_velocity(motorPower * 600);
-		ML.move_velocity(motorPower * 600);
-		FR.move_velocity(-motorPower * 600);
-		BR.move_velocity(-motorPower * 600);
-		MR.move_velocity(-motorPower * 600);
+        FL.move_velocity(motorPower * 400);
+		BL.move_velocity(motorPower * 400);
+		ML.move_velocity(motorPower * 400);
+		FR.move_velocity(motorPower * -400);
+		BR.move_velocity(motorPower * -400);
+		MR.move_velocity(motorPower * -400);
 
         //set up for next loop
+        prevError = error;
         prevMotorPower = motorPower;
         
         // Don't clog CPU
         pros::delay(30);
         
-        Controller1.set_text(0, 0, "turning:" + to_string(error));
+        Controller1.set_text(0, 0, " turning:" + to_string(error));
         Controller1.set_text(1, 0, to_string(proportional));
         Controller1.set_text(2, 0, to_string(currentPosition));
 
         // Exit conditions (NEED TUNING)
-        if (error <= 2) {
+        if (abs(error) <= 0.5) {
             t = 0;
             FL.move_velocity(0);
             BL.move_velocity(0);
@@ -225,8 +255,6 @@ void turnP(double angle) {
         }
     }
     
-    proportional = 0;
-    integral = 0;
-    derivative =  0;
+    resetValues();
     
 }

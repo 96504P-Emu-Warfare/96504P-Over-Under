@@ -30,6 +30,7 @@ extern double widthBetweenMiddleWheels;
 extern double trackingWheelWidth;
 extern double driveWheelRadius;
 extern double gearRatio;
+extern double cataGearing;
 
 // While Loop conditions, 'm' for move, 't' for turn pids
 extern int m;

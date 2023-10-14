@@ -65,6 +65,7 @@ bool inertialSensor = true;
 // In inches
 double widthBetweenMiddleWheels = 8;
 double driveWheelRadius = 3.25/2;
+double cataGearing = 6/10;
 
 // Should be able to multiply wheel speed and gearRatio to get motor speed
 double gearRatio = (double)54/30;
@@ -77,6 +78,6 @@ double gearRatio = (double)54/30;
     BR.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
     ML.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
     MR.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
-
-    //
+    CL.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
+    CR.set_encoder_units(E_MOTOR_ENCODER_DEGREES);
 }

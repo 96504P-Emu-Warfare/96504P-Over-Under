@@ -40,6 +40,7 @@ void brainBranding();
 void setConstants(string mode);
 void moveP(double distance);
 void turnP(double angle);
+void primeP(double rotationInDegrees);
 
 //RobotSetup.cpp
 void robotSetup();

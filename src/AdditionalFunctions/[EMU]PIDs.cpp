@@ -38,6 +38,12 @@ void setConstants(string mode) {
         kD = .03;
         slewRate = 0.03;
     }
+    if (mode == "cata") {
+        kP = 1.2;
+        kI = 0;
+        kD = .01;
+        slewRate = 0.1;
+    }
     else {
         std::cout << "Error: Constants are not set properly";
     }
@@ -45,6 +51,7 @@ void setConstants(string mode) {
 
 int m;
 int t;
+int s;
 
 double currentPosition;
 double setpointDistance;
@@ -166,9 +173,11 @@ void moveP(double distance) {
         prevMotorPower = motorPower;
 
         // Don't clog CPU
-        Controller1.set_text(0, 1, "e/p: " + to_string(currentPosition) + " " + to_string(error));
-        Controller1.set_text(1, 1, "powerM" + to_string(motorPower));
-        Controller1.set_text(2, 1, to_string(currentPosition));
+        // Replace all this with some type of event viewer on controller 2
+        // Controller2.update(update values within a task to send to controller 2)
+        Controller1.set_text(1, 1, "e/p: " + to_string(currentPosition) + " " + to_string(error));
+        Controller1.set_text(2, 1, "powerM" + to_string(motorPower));
+        Controller1.set_text(3, 1, to_string(currentPosition));
         
         pros::delay(30);
         
@@ -236,9 +245,6 @@ void turnP(double angle) {
         prevError = error;
         prevMotorPower = motorPower;
         
-        // Don't clog CPU
-        pros::delay(30);
-        
         Controller1.set_text(0, 0, " turning:" + to_string(error));
         Controller1.set_text(1, 0, to_string(proportional));
         Controller1.set_text(2, 0, to_string(currentPosition));
@@ -253,6 +259,79 @@ void turnP(double angle) {
             BR.move_velocity(0);
             MR.move_velocity(0);
         }
+
+        // Don't clog CPU
+        pros::delay(30);
+    }
+    
+    resetValues();
+    
+}
+
+void primeP(double rotationInDegrees) {
+
+    FL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	FR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	BL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	BR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	ML.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
+    //Set PID constant
+    setConstants("cata");
+
+    s = 1;
+    
+    setpointAngle = rotationInDegrees;
+    prevError = 0;
+        
+    currentAngle = 0;
+    
+    Inr.set_rotation(0);
+
+    delay(20);
+
+    while (s == 1) {
+
+        // Find currentAngle
+        currentAngle = (CL.get_position() * cataGearing);
+        
+        // Find error
+        error = setpointAngle - currentAngle;
+        
+        // Find P,I and D
+        proportional = ( abs(error) / setpointAngle );
+        integral += error;
+        derivative =  error - prevError;
+        
+        // Motor power output
+        motorPower =  kP*proportional + kI*integral + kD*derivative;
+        
+        // Slewing
+        motorPower = slew(motorPower, prevMotorPower);
+
+        // Overvolt protection
+        motorPower = overvoltProtection(motorPower);
+
+        // Apply motorPower
+        CL.move_velocity(motorPower * 200);
+
+        //set up for next loop
+        prevError = error;
+        prevMotorPower = motorPower;
+        
+        Controller1.set_text(0, 0, " priming:" + to_string(error));
+        Controller1.set_text(1, 0, to_string(proportional));
+        Controller1.set_text(2, 0, to_string(currentPosition));
+
+        // Exit conditions (NEED TUNING)
+        if (abs(error) <= 0.5) {
+            s = 0;
+            CL.move_velocity(0);
+        }
+
+        // Don't clog CPU
+        pros::delay(30);
     }
     
     resetValues();

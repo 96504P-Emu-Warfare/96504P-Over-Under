@@ -15,16 +15,14 @@ bool cataReady = false;
 bool cataOn = true;
 
 void shootCata() {
-
-    if (cataOn) {
-        if (cataReady == true) {
+    double hue = Opt.get_hue();
+    if (cataOn && cataReady && hue < 140 && hue > 81) {
             CL.move_relative(5, 200);
             CR.move_relative(5, 200);
             cataReady = false;
-        }  
-        else {
-            Controller2.set_text(0,0, "Cata not ready to fire");
-        }
+    } 
+    else {
+        Controller2.set_text(2,1, "Cata not ready to fire");
     }
 }
 
@@ -42,4 +40,8 @@ void disableCata() {
 
 void enableCata() {
     cataOn = true;
+}
+
+bool getCataStatus() {
+    return cataOn;
 }

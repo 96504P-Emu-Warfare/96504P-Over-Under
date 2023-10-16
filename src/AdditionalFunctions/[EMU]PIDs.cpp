@@ -324,6 +324,11 @@ void primeP(double rotationInDegrees) {
         Controller1.set_text(1, 0, to_string(proportional));
         Controller1.set_text(2, 0, to_string(currentPosition));
 
+        // Limit switch
+        if (cataSwitch.get_value() == 1) {
+            s = 0;
+        }
+        
         // Exit conditions (NEED TUNING)
         if (abs(error) <= 0.5) {
             s = 0;

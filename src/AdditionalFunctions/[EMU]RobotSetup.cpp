@@ -35,15 +35,15 @@ bool lukeBot = false;
 
 // For motors, the order is (port assignment, cartridge type, forwards backwards w/ 0 being forwards and 1 being backwards) 1/4 forwards
 
-    Motor FL(3, E_MOTOR_GEARSET_06, 1);
-    Motor FR(6, E_MOTOR_GEARSET_06, 0);
-    Motor BL(10, E_MOTOR_GEARSET_06, 1);
-    Motor BR(5, E_MOTOR_GEARSET_06, 0);
-    Motor ML(8, E_MOTOR_GEARSET_06, 0);
-    Motor MR(4, E_MOTOR_GEARSET_06, 1);
-    Motor CL(17, E_MOTOR_GEARSET_18, 1);
-    Motor CR(18, E_MOTOR_GEARSET_18, 1);
-    drivetrain chassis(3, 6);
+Motor FL(3, E_MOTOR_GEARSET_06, 1);
+Motor FR(6, E_MOTOR_GEARSET_06, 0);
+Motor BL(10, E_MOTOR_GEARSET_06, 1);
+Motor BR(5, E_MOTOR_GEARSET_06, 0);
+Motor ML(8, E_MOTOR_GEARSET_06, 0);
+Motor MR(4, E_MOTOR_GEARSET_06, 1);
+Motor CL(17, E_MOTOR_GEARSET_18, 1);
+Motor CR(18, E_MOTOR_GEARSET_18, 1);
+drivetrain chassis(3, 6);
 
 // ------------- CONTROLLERS ----------- //
 Controller Controller1(E_CONTROLLER_MASTER);
@@ -59,6 +59,8 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 //Rotation RotationR(8);
 //Rotation RotationB(9);
 IMU Inr(16);
+ADIAnalogIn cataSwitch(12);
+Optical Opt(13);
 bool inertialSensor = true;
 
 // ------------- SIZING SPECS ----------- //

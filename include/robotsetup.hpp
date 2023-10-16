@@ -17,13 +17,15 @@ extern Motor CR;
 extern drivetrain chassis;
 
 extern Controller Controller1;
-extern Controller Controller2;
+extern Controller Controller2;  
 
 extern Rotation RotationL;
 extern Rotation RotationR;
 extern Rotation RotationB;
 extern IMU Inr;
 extern bool inertialSensor;
+extern ADIAnalogIn cataSwitch;
+extern Optical Opt;
 
 extern double mathPI;
 extern double widthBetweenMiddleWheels;
@@ -35,3 +37,4 @@ extern double cataGearing;
 // While Loop conditions, 'm' for move, 't' for turn pids
 extern int m;
 extern int t;
+extern int p;

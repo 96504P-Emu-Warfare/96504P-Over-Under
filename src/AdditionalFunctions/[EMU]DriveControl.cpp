@@ -39,48 +39,45 @@ void driverControl() {
 
 		getAutonNumber();
 		
-		// CONTROLLER 1
+		// ******************************************
+		// CONTROLLER 1							   //
+		// ******************************************
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2))
-		{
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_A)){
+			//select screen
 		}
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_A))
-		{
-			turnP(90);
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_B)){
+			//back screen
 		}
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1))
-		{
+		// change this later, only for testing enable/disable
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X)){
+			if (getCataStatus() == true) {
+				disableCata();
+			}
+			if (getCataStatus() == false) {
+				enableCata();
+			}
+		}
+
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y)){
+			primeCata();
+			shootCata();
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2)){
+			//expand both wings
+		}
+
+		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2)){
 			CR.move_velocity(-127);
 		}
-		else if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L1)){
+		else if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			CR.move(127);
 		} 
 		else {
 			CR.move(0);
-		}
-
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_UP))
-		{
-		}
-
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_DOWN))
-		{
-			moveP(40);
-		}
-
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X))
-		{
-			
-		}
-
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y))
-		{
-			callAuton();
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_LEFT)) {
@@ -90,7 +87,9 @@ void driverControl() {
 			backwardOne();
 		}
 
-		// CONTROLLER 2
+		// ******************************************
+		// CONTROLLER 2							   //
+		// ******************************************
 
 		if (Controller2.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{

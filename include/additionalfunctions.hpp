@@ -45,4 +45,11 @@ void primeP(double rotationInDegrees);
 //RobotSetup.cpp
 void robotSetup();
 
+//Cata.cpp
+void primeCata();
+void shootCata();
+void enableCata();
+void disableCata();
+bool getCataStatus();
+
 

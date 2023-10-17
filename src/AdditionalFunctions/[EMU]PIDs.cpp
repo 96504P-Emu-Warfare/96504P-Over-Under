@@ -270,12 +270,7 @@ void turnP(double angle) {
 
 void primeP(double rotationInDegrees) {
 
-    FL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	FR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	BL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	BR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	ML.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	MR.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    CL.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
     //Set PID constant
     setConstants("cata");

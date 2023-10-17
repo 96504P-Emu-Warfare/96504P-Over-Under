@@ -282,7 +282,7 @@ void primeP(double rotationInDegrees) {
         
     currentAngle = 0;
     
-    Inr.set_rotation(0);
+    CL.set_zero_position(0);
 
     delay(20);
 

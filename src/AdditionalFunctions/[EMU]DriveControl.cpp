@@ -53,12 +53,7 @@ void driverControl() {
 
 		// change this later, only for testing enable/disable
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X)){
-			if (getCataStatus() == true) {
-				disableCata();
-			}
-			if (getCataStatus() == false) {
-				enableCata();
-			}
+			calibrateCata();
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y)){

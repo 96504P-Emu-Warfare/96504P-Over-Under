@@ -51,5 +51,6 @@ void shootCata();
 void enableCata();
 void disableCata();
 bool getCataStatus();
+void calibrateCata();
 
 

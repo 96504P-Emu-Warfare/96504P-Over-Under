@@ -54,5 +54,5 @@ void calibrateCata() {
     while (cataSwitch.get_value() == 0) {
         CL.move_velocity(50);
     }
-    Controller1.set_text(1,1, to_string(CL.get_position()));
+    Controller1.set_text(2,1, to_string(CL.get_position()));
 }

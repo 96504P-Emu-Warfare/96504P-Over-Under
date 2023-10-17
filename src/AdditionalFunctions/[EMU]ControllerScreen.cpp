@@ -9,8 +9,8 @@ a task in main. The controller includes data such as
  - Flywheel speed
 etc....
 
-Controller 1 will focus on the drive itself
-Controller 2 will focus on other operations, such as shooting and elevating
+Controller 1 will focus on the things useful while driving
+Controller 2 will focus on diagnostics and maybe elevation
 
 Created 6/17/23
 Last update 6/19/23

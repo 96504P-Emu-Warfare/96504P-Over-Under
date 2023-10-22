@@ -11,7 +11,4 @@ Follow our YouTube channel!
 
 [Email] (emuwarfare96504p@gmail.com)
 
-## EZ-Template
-
-EZ-Template was used for auton-selector, but is mostly phased out
 

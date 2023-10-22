@@ -1,5 +1,5 @@
 # 96504P Over Under
-### This is all the code for the 2023-2024 Vex VRC Game  
+### This is the homemade code for the 2023-2024 Vex VRC Game  
 
 Full documentation for the code can be found in our notebook.
 

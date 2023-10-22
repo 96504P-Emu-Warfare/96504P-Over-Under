@@ -18,7 +18,6 @@ using namespace pros;
 // Global variables
 double xPos = 0;
 double yPos = 0;
-double posArray[2];
 double heading;
 double newDistance;
 

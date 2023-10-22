@@ -24,6 +24,8 @@ extern IMU Inr;
 extern bool inertialSensor;
 extern ADIAnalogIn cataSwitch;
 extern Optical Opt;
+extern ADIDigitalOut rightWing;
+extern ADIDigitalOut leftWing;
 
 extern double mathPI;
 extern double widthBetweenMiddleWheels;

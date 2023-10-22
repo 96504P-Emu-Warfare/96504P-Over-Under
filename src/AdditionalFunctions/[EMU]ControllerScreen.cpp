@@ -25,6 +25,7 @@ void overheatWarningEMU(int motorHeat, Controller controller){
     if (motorHeat > 74) {
         controller.set_text(2,0, "DRIVE MOTOR OVERHEAT WARNING: " + motorHeat);
         screen::set_eraser(COLOR_RED);
+        delay(2000);
         screen::erase();
         controller.rumble(". . .");
     }   
@@ -48,8 +49,11 @@ void controllerScreenSetupEMU() {
     // Setting text of controller
     //while (true) {
         Controller1.set_text(0,0, "Bat: " + std::to_string(batteryCapacity) + "%");
+        delay(50);
         Controller1.set_text(1,0, "LDS: " + std::to_string(LdriveSpeed) + "RPM");
+        delay(50);
         Controller1.set_text(1,8, "RDS: " + std::to_string(RdriveSpeed) + "RPM");
+        delay(50);
         
 
         // Overheat warnings for drive motors
@@ -60,15 +64,20 @@ void controllerScreenSetupEMU() {
         overheatWarningEMU(MLheat, Controller1);
         overheatWarningEMU(BLheat, Controller1);
 
-        //pros::delay(10); MAKE SURE TO UNCOMMENT WHEN PUT BACK INTO A SEPARATE TASK
     //}
 
     // *************** CONTROLLER 2 - Focused on watching data ********************//
         
         Controller1.set_text(0,0, "FR: " + std::to_string(FRheat));
+        delay(50);
         Controller1.set_text(0,8, "MR: " + std::to_string(MRheat));
+        delay(50);
         Controller1.set_text(1,0, "BR: " + std::to_string(BRheat));
+        delay(50);
         Controller1.set_text(1,8, "FL: " + std::to_string(FLheat));
+        delay(50);
         Controller1.set_text(2,0, "ML: " + std::to_string(MLheat));
+        delay(50);
         Controller1.set_text(2,8, "BL: " + std::to_string(BLheat));
+        delay(50);
 }

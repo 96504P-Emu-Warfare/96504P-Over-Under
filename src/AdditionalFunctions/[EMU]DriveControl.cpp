@@ -15,8 +15,10 @@ void driverControl() {
     // Variables
     float driveSpeed = .9;
     float turnSpeed = .4;
+	bool leftWingOut = false;
+	bool rightWingOut = false;
+	bool cataMotorOn = false;
 
-    // Brain.Timer.clear();
 	//chassis.motorsStop();
 
 	FL.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -25,8 +27,6 @@ void driverControl() {
 	BR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	ML.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	MR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-
-	
 
 	/**
 	 * BUTTON INPUT SYSTEM
@@ -37,23 +37,28 @@ void driverControl() {
 	{
 		void controllerScreenSetupEMU();
 
-		getAutonNumber();
-		
 		// ******************************************
 		// CONTROLLER 1							   //
 		// ******************************************
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_A)){
-			//select screen
+		if (Controller1.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
+			if (cataMotorOn == false) {
+				CL.move_velocity(70);
+				cataMotorOn = true;
+			}
+			else {
+				CL.move_velocity(0);
+				cataMotorOn = false;
+			}
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_B)){
-			//back screen
+			
 		}
 
 		// change this later, only for testing enable/disable
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_X)){
-			calibrateCata();
+			callAuton();
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y)){
@@ -61,8 +66,27 @@ void driverControl() {
 			shootCata();
 		}
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_L2)){
-			//expand both wings
+		//SHIFT BUTTON
+		if (Controller1.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
+			if (leftWingOut == false) {
+				leftWing.set_value(1);
+				leftWingOut = true;
+			}
+			else {
+				leftWing.set_value(0);
+				leftWingOut = false;
+			}
+		}
+
+		if (Controller1.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+			if (rightWingOut == false) {
+				rightWing.set_value(1);
+				rightWingOut = true;
+			}
+			else {
+				rightWing.set_value(0);
+				rightWingOut = false;
+			}
 		}
 
 		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_R2)){
@@ -75,10 +99,10 @@ void driverControl() {
 			CR.move(0);
 		}
 
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_LEFT)) {
+		if (Controller1.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
 			forwardOne();
 		}
-		if (Controller1.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) {
+		if (Controller1.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)) {
 			backwardOne();
 		}
 
@@ -130,7 +154,16 @@ void driverControl() {
 		MR.move_velocity(right);
 		BR.move_velocity(right);
 
-		Controller1.set_text(0,1, to_string(left) + " " + to_string(right));
+		getAuton();
+
+        overheatWarningEMU(FR.get_temperature(), Controller1);
+        overheatWarningEMU(MR.get_temperature(), Controller1);
+        overheatWarningEMU(BR.get_temperature(), Controller1);
+        overheatWarningEMU(FL.get_temperature(), Controller1);
+        overheatWarningEMU(ML.get_temperature(), Controller1);
+        overheatWarningEMU(BL.get_temperature(), Controller1);
+		overheatWarningEMU(CL.get_temperature(), Controller1);
+		overheatWarningEMU(CR.get_temperature(), Controller1);
 
 		pros::delay(20);
 

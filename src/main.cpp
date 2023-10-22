@@ -20,11 +20,17 @@ using namespace pros;
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+
 void initialize()
 {
-	// Create default settings for motors
-	Controller1.set_text(2, 0, "Setting up");
-	robotSetup();
+	/** Create default settings for motors
+	Controller1.print(0, 0, "                  ");
+	delay(50);
+	Controller1.print(1, 0, "                  ");
+	delay(50);
+	Controller1.print(2, 0, "Setting up");
+	delay(50);
+	robotSetup();*/
 
 	// Opening branding on controller and brain
 	//branding();
@@ -41,10 +47,12 @@ void initialize()
 	//Add autonomous implementation
 
 	// Create the controller screen task
-	//Task controllerScreen(controllerScreenSetupEMU);
+	//std::thread controller(controllerScreenSetupEMU);
+	//auto controllerScreen = lv_task_create(controllerScreenSetupEMU, 1000, LV_TASK_PRIO_MID);
+	//lv_task_enable(controllerScreen);
 
 	// Create the odometry tracking task
-	//Task odometry(updatePosTask);
+	//std::thread odometry(updatePosTask);
 
 	// Tasks for updating TLs
 }
@@ -86,7 +94,7 @@ void competition_initialize()
  */
 void autonomous()
 {
-	//callAuton();
+	callAuton();
 }
 
 /**

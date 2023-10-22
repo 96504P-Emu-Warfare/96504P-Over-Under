@@ -43,7 +43,6 @@ Motor ML(8, E_MOTOR_GEARSET_06, 0);
 Motor MR(4, E_MOTOR_GEARSET_06, 1);
 Motor CL(17, E_MOTOR_GEARSET_18, 1);
 Motor CR(18, E_MOTOR_GEARSET_18, 1);
-drivetrain chassis(3, 6);
 
 // ------------- CONTROLLERS ----------- //
 Controller Controller1(E_CONTROLLER_MASTER);
@@ -53,6 +52,8 @@ Controller Controller2(E_CONTROLLER_PARTNER);
 //pros::Link radio(20, "Robot1", pros::E_LINK_TRANSMITTER);
 
 // ------------- PNEUMATICS ----------- //
+ADIDigitalOut rightWing('A');
+ADIDigitalOut leftWing('B');
 
 // ------------- SENSORS ----------- //
 //Rotation RotationL(7);

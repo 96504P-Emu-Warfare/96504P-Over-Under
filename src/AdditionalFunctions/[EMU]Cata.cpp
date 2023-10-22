@@ -51,8 +51,8 @@ bool getCataStatus() {
 void calibrateCata() {
     CL.set_zero_position(0);
     delay(20);
-    while (cataSwitch.get_value() == 0) {
-        CL.move_velocity(50);
+    while (Controller1.get_digital(E_CONTROLLER_DIGITAL_Y)) {
+        CL.move_velocity(100);
+        Controller1.set_text(2,1, to_string(CL.get_position()));
     }
-    Controller1.set_text(2,1, to_string(CL.get_position()));
 }

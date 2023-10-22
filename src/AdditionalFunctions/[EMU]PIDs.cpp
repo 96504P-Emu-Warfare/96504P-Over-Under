@@ -21,28 +21,34 @@ double slewRate;
 
 void setConstants(string mode) {
     if (mode == "move") {
-        kP = 1.2;
+        kP = 1.3;
         kI = 0;
         kD = .01;
         slewRate = 0.05;
     }
     if  (mode == "turnShort") {
-        kP = .8;
+        kP = 1.42;
         kI = .0;
-        kD = .02;
-        slewRate = 0.04;
+        kD = .142;
+        slewRate = 0.03;
     }
     if  (mode == "turnLong") {
-        kP = 1.6;
+        kP = 2.1;
         kI = .0;
-        kD = .03;
-        slewRate = 0.03;
+        kD = .16;
+        slewRate = 0.04;
     }
     if (mode == "cata") {
         kP = 1.2;
         kI = 0;
         kD = .01;
         slewRate = 0.1;
+    }
+    if(mode == "turnTiny") {
+        kP = 1.405;
+        kI = 0;
+        kD = .3;
+        slewRate = .02;
     }
     else {
         std::cout << "Error: Constants are not set properly";
@@ -65,6 +71,7 @@ double derivative;
 double prevError;
 double motorPower;
 double prevMotorPower;
+int sign;
 
 double correctionError;
 
@@ -127,16 +134,17 @@ void moveP(double distance) {
     
     while (m == 1) {
 
-
         // Find currentPosition 
         currentPosition = ( ((ML.get_position() + MR.get_position()) / 2) * (mathPI / 180) * 0.6 * driveWheelRadius);
         correctionError = Inr.get_rotation();
         
         // Find error
         error = setpointDistance - currentPosition;
+
+        sign = error/ abs(error);
         
         // Find P,I and D
-        proportional = ( abs(error) / setpointDistance );
+        proportional = ( abs(error) / abs(setpointDistance) * sign);
         integral += error;
         derivative =  error - prevError;
         
@@ -158,7 +166,7 @@ void moveP(double distance) {
 		MR.move_velocity(motorPower * 400);
         
         // Exit conditions (NEED TO BE TUNED)
-        if (abs(error) <= 0.2) {
+        if (abs(error) <= 0.5) {
             m = 0;
             FL.move_velocity(motorPower * 0);
             BL.move_velocity(motorPower * 0);
@@ -175,9 +183,9 @@ void moveP(double distance) {
         // Don't clog CPU
         // Replace all this with some type of event viewer on controller 2
         // Controller2.update(update values within a task to send to controller 2)
-        Controller1.set_text(1, 1, "e/p: " + to_string(currentPosition) + " " + to_string(error));
-        Controller1.set_text(2, 1, "powerM" + to_string(motorPower));
-        Controller1.set_text(3, 1, to_string(currentPosition));
+        Controller1.set_text(0, 1, "e/p: " + to_string(currentPosition) + " " + to_string(error));
+        Controller1.set_text(1, 1, "powerM" + to_string(motorPower));
+        Controller1.set_text(2, 1, to_string(currentPosition));
         
         pros::delay(30);
         
@@ -196,7 +204,8 @@ void turnP(double angle) {
 
     //Set PID constants to turn mode
     if (angle > 120) {setConstants("turnLong");}
-    else {setConstants("turnShort");}
+    else if (angle > 70) {setConstants("turnShort");}
+    else {setConstants("turnTiny");}
 
     t = 1;
     
@@ -213,18 +222,20 @@ void turnP(double angle) {
 
         // Find currentAngle
         currentAngle = (Inr.get_rotation());
+
+        sign = error/ abs(error);
         
         // Find error
         error = setpointAngle - currentAngle;
         
         // Find P,I and D
-        proportional = ( abs(error) / setpointAngle );
+        proportional = ( abs(error) / abs(setpointAngle) * sign);
         integral += error;
         derivative =  error - prevError;
         
         // Motor power output
         motorPower =  kP*proportional + kI*integral + kD*derivative;
-        
+                
         // Slewing
         motorPower = slew(motorPower, prevMotorPower);
 
@@ -249,7 +260,7 @@ void turnP(double angle) {
         Controller1.set_text(1, 0, to_string(proportional));
         Controller1.set_text(2, 0, to_string(currentPosition));
 
-        // Exit conditions (NEED TUNING)
+        // Exit conditions
         if (abs(error) <= 0.5) {
             t = 0;
             FL.move_velocity(0);
